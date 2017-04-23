@@ -6,6 +6,7 @@ npm install
 
 Before running you must provide some environment variables.
 
+- PORT - [optional, default: 3000] - server port,
 - SURVEY_PROVIDER - [mandatory] - survey provider (available options: csv),
 - SURVEY_SRC - [mandatory] - survey source file (in case when SURVEY_PROVIDER=csv),
 - DB_PROVIDER - [mandatory] - database provider (available options: sqlite3),

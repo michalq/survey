@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 // Get routes
 const index = require('./routes/index');
-const apiv1 = require('./routes/users');
+const apiv1 = require('./routes/apiv1');
 
 // Initialize an app
 const app = express();
@@ -17,6 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Set routes
 app.use('/', index);
@@ -38,6 +39,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
 });
 
 module.exports = app;

@@ -1,3 +1,5 @@
+const BaseProvider = require('./BaseProvider');
+
 /**
  * Parse CSV file and create survey.
  */
