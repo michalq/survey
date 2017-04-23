@@ -1,18 +1,16 @@
-
 /**
  * Providers for questions in survey could be different, thus there is need to
  * provide one base class which will be extended later.
  */
-class BaseProvider {
-    constructor() {
-        //
-    }
-
+class BaseProvider
+{
     /**
      * Returns collection of survey nodes.
-     * @return {Array}
+     * @return {Survey}
      */
-    getNodes() {
-        //
+    getSurvey() {
+        throw new Error('Method getSurvey() is not implemented.');
     }
 }
+
+module.exports = BaseProvider;

@@ -1,5 +1,5 @@
 {
-  "name": "suvey-system",
+  "name": "survey-system",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,10 @@
   "author": "Michał Kutrzeba",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "path": "^0.12.7"
   }
 }
