@@ -19,44 +19,7 @@
       <h1 class="navbar-brand mb-0">Survey System</h1>
     </nav>
     <div class="container">
-      <div class="jumbotron start-page">
-        <h1 class="display-3">Survey title!</h1>
-        <p class="lead">Survey subtitle. For example purpose of the survey or just welcome text.</p>
-        <hr class="my-4">
-        <button type="" class="btn btn-outline-success btn-lg">Begin</button>
-      </div>
-      <div class="card question-card">
-        <div class="card-block">
-          <h4 class="card-title">{{ statement.title }}</h4>
-        </div>
-        <div class="list-group list-group-flush">
-          <label class="list-group-item"><input type="radio" name="response[]" value="1"> Yes</label>
-          <label class="list-group-item"><input type="radio" name="response[]" value="0"> No</label>
-          <label class="list-group-item"><input type="radio" name="response[]" value="2"> I don't know</label>
-        </div>
-        <div class="btn-group" role="group">
-          <button class="btn btn-md btn-default col-2">Previous</button>
-          <button class="btn btn-md btn-primary col-10">Next</button>
-        </div>
-      </div>
-
-      <div class="card question-card">
-        <div class="card-block">
-          <h4 class="card-title">{{ statement.title }}</h4>
-        </div>
-        <div class="card-text">
-          <span class="pull-left">0%</span>
-          <output id="rangevalue">50</output>
-          <span class="pull-right">100%</span>
-          <div class="clearfix"></div>
-          <input type="range" id="response-" name="response[]" value="100">
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button class="btn btn-md btn-default col-2">Previous</button>
-          <button class="btn btn-md btn-primary col-10">Next</button>
-        </div>
-      </div>
-
+      <landing></landing>
     </div>
 
     <footer class="footer">
@@ -74,26 +37,62 @@
     </footer>
   </body>
   <script type="text/babel">
-    Vue.component('q-type-yes-no-idk', {
-      props: ['todo'],
-      template: '<li>{{ todo.text }}</li>'
-    });
-
     Vue.component('q-type-percentage', {
-      props: ['todo'],
-      template: '<li>{{ todo.text }}</li>'
+      render (h) {
+        return (
+          <div class="card question-card">
+            <div class="card-block">
+              <h4 class="card-title">{{ statement.title }}</h4>
+            </div>
+            <div class="card-text">
+              <span class="pull-left">0%</span>
+              <output id="rangevalue">50</output>
+              <span class="pull-right">100%</span>
+              <div class="clearfix"></div>
+              <input type="range" id="response-" name="response[]" value="100">
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button class="btn btn-md btn-default col-2">Previous</button>
+              <button class="btn btn-md btn-primary col-10">Next</button>
+            </div>
+          </div>
+        )
+      }
+    });
+
+    Vue.component('q-type-quick', {
+      render (h) {
+        return (
+          <div class="card question-card">
+            <div class="card-block">
+              <h4 class="card-title">{{ statement.title }}</h4>
+            </div>
+            <div class="list-group list-group-flush">
+              <label class="list-group-item"><input type="radio" name="response[]" value="1"> Yes</label>
+              <label class="list-group-item"><input type="radio" name="response[]" value="0"> No</label>
+              <label class="list-group-item"><input type="radio" name="response[]" value="2"> I don't know</label>
+            </div>
+            <div class="btn-group" role="group">
+              <button class="btn btn-md btn-default col-2">Previous</button>
+              <button class="btn btn-md btn-primary col-10">Next</button>
+            </div>
+          </div>
+        )
+      }
     });
 
 
-var app7 = new Vue({
-  el: '#app-7',
-  data: {
-    groceryList: [
-      { text: 'Vegetables' },
-      { text: 'Cheese' },
-      { text: 'Whatever else humans are supposed to eat' }
-    ]
-  }
-})
+    Vue.component('landing', {
+      render (h) {
+        return (
+          <div class="jumbotron start-page">
+            <h1 class="display-3">Survey title!</h1>
+            <p class="lead">Survey subtitle. For example purpose of the survey or just welcome text.</p>
+            <hr class="my-4">
+            <button type="" class="btn btn-outline-success btn-lg">Begin</button>
+          </div>
+        )
+      }
+    });
   </script>
 </html>
