@@ -9,29 +9,36 @@
 
     <title>Survey System</title>
     <link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-faded">
+      <h1 class="navbar-brand mb-0">Survey System</h1>
+    </nav>
     <div class="container">
-      <div class="masthead">
-        <h3 class="text-muted">Survey System</h3>
+      <div class="jumbotron start-page">
+        <h1 class="display-3">Survey title!</h1>
+        <p class="lead">Survey subtitle. For example purpose of the survey or just welcome text.</p>
+        <hr class="my-4">
+        <button type="" class="btn btn-outline-success btn-lg">Begin</button>
       </div>
-
-      <div class="card">
+      <div class="card question-card">
         <div class="card-block">
           <h4 class="card-title">Panel title</h4>
-          <div class="card-text">
-            <div class="list-group">
-              <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
-              <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
-              <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
-            </div>
-          </div>
-          <button class="btn btn-md btn-primary">Next</button>
+        </div>
+        <div class="list-group list-group-flush">
+          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
+          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
+          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-md btn-default col-2">Previous</button>
+          <button class="btn btn-md btn-primary col-10">Next</button>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card question-card">
         <div class="card-block">
           <h4 class="card-title">Panel title</h4>
         </div>
@@ -39,20 +46,39 @@
           <label class="list-group-item"><input type="radio" name="radio"> Yes</label>
           <label class="list-group-item"><input type="radio" name="radio"> No</label>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-block">
-            <h4 class="card-title">Panel title</h4>
-            <div class="card-text">
-              <span class="pull-left">0%</span>
-              <span class="pull-right">100%</span>
-              <div class="clearfix"></div>
-              <input type="range" id="a" name="a" value="100">
-            </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-md btn-default col-2">Previous</button>
+          <button class="btn btn-md btn-primary col-10">Next</button>
         </div>
       </div>
 
+      <div class="card question-card">
+        <div class="card-block">
+          <h4 class="card-title">Panel title</h4>
+        </div>
+          <span class="pull-left">0%</span>
+          <span class="pull-right">100%</span>
+          <div class="clearfix"></div>
+          <input type="range" id="a" name="a" value="100">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-md btn-default col-2">Previous</button>
+          <button class="btn btn-md btn-primary col-10">Next</button>
+        </div>
+      </div>
     </div>
+
+    <footer class="footer">
+      <div class="container">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
