@@ -10,6 +10,8 @@
     <title>Survey System</title>
     <link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <script src="modules/vue/dist/vue.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
 
   <body>
@@ -25,14 +27,14 @@
       </div>
       <div class="card question-card">
         <div class="card-block">
-          <h4 class="card-title">Panel title</h4>
+          <h4 class="card-title">{{ statement.title }}</h4>
         </div>
         <div class="list-group list-group-flush">
-          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
-          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
-          <label class="list-group-item"><input type="checkbox" name=""> Cras justo odio</label>
+          <label class="list-group-item"><input type="radio" name="response[]" value="1"> Yes</label>
+          <label class="list-group-item"><input type="radio" name="response[]" value="0"> No</label>
+          <label class="list-group-item"><input type="radio" name="response[]" value="2"> I don't know</label>
         </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="btn-group" role="group">
           <button class="btn btn-md btn-default col-2">Previous</button>
           <button class="btn btn-md btn-primary col-10">Next</button>
         </div>
@@ -40,31 +42,21 @@
 
       <div class="card question-card">
         <div class="card-block">
-          <h4 class="card-title">Panel title</h4>
+          <h4 class="card-title">{{ statement.title }}</h4>
         </div>
-        <div class="list-group list-group-flush">
-          <label class="list-group-item"><input type="radio" name="radio"> Yes</label>
-          <label class="list-group-item"><input type="radio" name="radio"> No</label>
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button class="btn btn-md btn-default col-2">Previous</button>
-          <button class="btn btn-md btn-primary col-10">Next</button>
-        </div>
-      </div>
-
-      <div class="card question-card">
-        <div class="card-block">
-          <h4 class="card-title">Panel title</h4>
-        </div>
+        <div class="card-text">
           <span class="pull-left">0%</span>
+          <output id="rangevalue">50</output>
           <span class="pull-right">100%</span>
           <div class="clearfix"></div>
-          <input type="range" id="a" name="a" value="100">
+          <input type="range" id="response-" name="response[]" value="100">
+        </div>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button class="btn btn-md btn-default col-2">Previous</button>
           <button class="btn btn-md btn-primary col-10">Next</button>
         </div>
       </div>
+
     </div>
 
     <footer class="footer">
@@ -81,4 +73,27 @@
       </div>
     </footer>
   </body>
+  <script type="text/babel">
+    Vue.component('q-type-yes-no-idk', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}</li>'
+    });
+
+    Vue.component('q-type-percentage', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}</li>'
+    });
+
+
+var app7 = new Vue({
+  el: '#app-7',
+  data: {
+    groceryList: [
+      { text: 'Vegetables' },
+      { text: 'Cheese' },
+      { text: 'Whatever else humans are supposed to eat' }
+    ]
+  }
+})
+  </script>
 </html>
