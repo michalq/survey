@@ -16,9 +16,15 @@ Before running you must provide some environment variables.
 
 ## Backend
 
-Core is written in NodeJS. And application database in Sqlite3. 
-Why Sqlite3? 
+Core is written in NodeJS. And application database in Sqlite3.
+Why Sqlite3?
 It is easier to develop so small project and is free. The most popular and free databases like MySQL and PostgreSql fit to this project as well, but in stage of developement it is easier to use file based database.
+
+## Developing
+
+### Frontent
+
+
 
 ## Frontend
 
