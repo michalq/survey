@@ -21,99 +21,175 @@
   </body>
 
   <script type="text/babel">
-    var QTypePercentage = React.createClass({
-      render: function() {
+    class QTypePercentage extends React.Component
+    {
+      render() {
         return (
-          <div class="card question-card">
-            <div class="card-block">
-              <h4 class="card-title">test</h4>
+          <div className="card question-card">
+            <div className="card-block">
+              <h4 className="card-title">test</h4>
             </div>
-            <div class="card-text">
-              <span class="pull-left">0%</span>
+            <div className="card-text">
+              <span className="pull-left">0%</span>
               <output id="rangevalue">50</output>
-              <span class="pull-right">100%</span>
-              <div class="clearfix"></div>
+              <span className="pull-right">100%</span>
+              <div className="clearfix"></div>
               <input type="range" id="response-" name="response[]" value="100"/>
             </div>
-            <div class="btn-group" role="group" aria-label="Basic example">
-              <button class="btn btn-md btn-default col-2">Previous</button>
-              <button class="btn btn-md btn-primary col-10">Next</button>
+            <div className="btn-group" role="group" aria-label="Basic example">
+              <button className="btn btn-md btn-default col-2">Previous</button>
+              <button className="btn btn-md btn-primary col-10">Next</button>
             </div>
           </div>
         )
       }
-    });
+    }
 
-    var QTypeQuick = React.createClass({
-      render: function() {
+    class QTypeQuick extends React.Component
+    {
+      render() {
         return (
-          <div class="card question-card">
-            <div class="card-block">
-              <h4 class="card-title">test</h4>
+          <div className="card question-card">
+            <div className="card-block">
+              <h4 className="card-title">test</h4>
             </div>
-            <div class="list-group list-group-flush">
-              <label class="list-group-item"><input type="radio" name="response[]" value="1"/> Yes</label>
-              <label class="list-group-item"><input type="radio" name="response[]" value="0"/> No</label>
-              <label class="list-group-item"><input type="radio" name="response[]" value="2"/> I don't know</label>
+            <div className="list-group list-group-flush">
+              <label className="list-group-item"><input type="radio" name="response[]" value="1"/> Yes</label>
+              <label className="list-group-item"><input type="radio" name="response[]" value="0"/> No</label>
+              <label className="list-group-item"><input type="radio" name="response[]" value="2"/> I don't know</label>
             </div>
-            <div class="btn-group" role="group">
-              <button class="btn btn-md btn-default col-2">Previous</button>
-              <button class="btn btn-md btn-primary col-10">Next</button>
+            <div className="btn-group" role="group">
+              <button className="btn btn-md btn-default col-2">Previous</button>
+              <button className="btn btn-md btn-primary col-10">Next</button>
             </div>
           </div>
         )
       }
-    });
+    }
 
 
-    var Landing = React.createClass({
-      render: function() {
+    class Landing extends React.Component
+    {
+      render() {
+        const title = this.props.title;
+        const description = this.props.description;
+
         return (
-          <div class="jumbotron start-page">
-            <h1 class="display-3">Survey title!</h1>
-            <p class="lead">Survey subtitle. For example purpose of the survey or just welcome text.</p>
-            <hr class="my-4"/>
-            <button type="" class="btn btn-outline-success btn-lg">Begin</button>
+          <div className="jumbotron start-page">
+            <h1 className="display-3">{ survey.title }</h1>
+            <p className="lead">{ survey.description }</p>
+            <hr className="my-4"/>
+            <button type="" className="btn btn-outline-success btn-lg">Begin</button>
           </div>
         )
       }
-    });
+    }
 
-    var Pagination = React.createClass({
-      render: function() {
+    class Pagination extends React.Component
+    {
+      render() {
+        const pages = this.props.pages;
+        const current = this.props.current;
+
+        let htmlPages = [];
+        for (let i = 0; i < pages; i++) {
+          htmlPages.push(
+            <li key={i} className="page-item">
+              <a className="page-link" href={'#statement-' + (i + 1)}>{i + 1}</a>
+            </li>
+          );
+        }
+
         return (
-          <footer class="footer">
-            <div class="container">
+          <footer className="footer">
+            <div className="container">
               <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <ul className="pagination">
+                  <li className="page-item"><a className="page-link" href="#statement-1">Previous</a></li>
+                  {htmlPages}
+                  <li className="page-item"><a className="page-link" href={'#statement-' + pages}>Next</a></li>
                 </ul>
               </nav>
             </div>
           </footer>
         )
       }
-    });
+    }
 
-    var Body = React.createClass({
-      render: function() {
+    class Body extends React.Component
+    {
+
+      render() {
+        const survey = {
+          title: "Testowa ankieta.",
+          description: "Testowy opis ankiety.",
+          statements: [
+            {
+              title: "Pytanie testowe?",
+              responses: {
+                type: 1,
+                data: [
+                  {
+                    label: "Yes",
+                    value: 1
+                  },
+                  {
+                    label: "No",
+                    value: 0
+                  },
+                  {
+                    label: "I don't know",
+                    value: 2
+                  }
+                ]
+              }
+            },
+            {
+              title: "Pytanie testowe 2?",
+              responses: {
+                type: 1,
+                data: [
+                  {
+                    label: "Yes",
+                    value: 1
+                  },
+                  {
+                    label: "No",
+                    value: 0
+                  },
+                  {
+                    label: "I don't know",
+                    value: 2
+                  }
+                ]
+              }
+            },
+            {
+              title: "Pytanie testowe procentowe?",
+              responses: {
+                type: 2,
+                data: {
+                  start: 0,
+                  end: 100
+                }
+              }
+            }
+          ]
+        };
+
         return (
           <div>
-            <nav class="navbar navbar-light bg-faded">
-              <h1 class="navbar-brand mb-0">Survey System</h1>
+            <nav className="navbar navbar-light bg-faded">
+              <h1 className="navbar-brand mb-0">Survey System</h1>
             </nav>
-            <div class="container">
-              <Landing/>
+            <div className="container">
+              <Landing title={survey.title} description={survey.description}/>
             </div>
-            <Pagination/>
+            <Pagination pages="5" current="2"/>
           </div>
         )
       }
-    });
+    }
 
     ReactDOM.render(
       <Body/>,
