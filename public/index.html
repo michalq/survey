@@ -9,6 +9,8 @@
 
     <title>Survey System</title>
     <link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="modules/animate.css/animate.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <script src="modules/react/react.js" type="text/javascript" charset="utf-8"></script>
@@ -24,10 +26,12 @@
     class QTypePercentage extends React.Component
     {
       render() {
+        const title = this.props.title;
+
         return (
-          <div className="card question-card">
+          <div className="card question-card hidden">
             <div className="card-block">
-              <h4 className="card-title">test</h4>
+              <h4 className="card-title">{title}</h4>
             </div>
             <div className="card-text">
               <span className="pull-left">0%</span>
@@ -35,10 +39,6 @@
               <span className="pull-right">100%</span>
               <div className="clearfix"></div>
               <input type="range" id="response-" name="response[]" value="100"/>
-            </div>
-            <div className="btn-group" role="group" aria-label="Basic example">
-              <button className="btn btn-md btn-default col-2">Previous</button>
-              <button className="btn btn-md btn-primary col-10">Next</button>
             </div>
           </div>
         )
@@ -48,19 +48,17 @@
     class QTypeQuick extends React.Component
     {
       render() {
+        const title = this.props.title;
+
         return (
-          <div className="card question-card">
+          <div className="card question-card hidden">
             <div className="card-block">
-              <h4 className="card-title">test</h4>
+              <h4 className="card-title">{title}</h4>
             </div>
             <div className="list-group list-group-flush">
               <label className="list-group-item"><input type="radio" name="response[]" value="1"/> Yes</label>
               <label className="list-group-item"><input type="radio" name="response[]" value="0"/> No</label>
               <label className="list-group-item"><input type="radio" name="response[]" value="2"/> I don't know</label>
-            </div>
-            <div className="btn-group" role="group">
-              <button className="btn btn-md btn-default col-2">Previous</button>
-              <button className="btn btn-md btn-primary col-10">Next</button>
             </div>
           </div>
         )
@@ -70,16 +68,30 @@
 
     class Landing extends React.Component
     {
+      beginSurvey() {
+        const startPage = document.querySelector('.start-page');
+        startPage.classList.add('animated');
+        startPage.classList.add('fadeOut');
+        //webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend
+        startPage.addEventListener('animationend', e => {
+          const questionCard = document.querySelector('.question-card');
+          startPage.classList.add('hidden');
+          questionCard.classList.remove('hidden');
+          questionCard.classList.add('animated');
+          questionCard.classList.add('fadeIn');
+        });
+      }
+
       render() {
         const title = this.props.title;
         const description = this.props.description;
 
         return (
           <div className="jumbotron start-page">
-            <h1 className="display-3">{ survey.title }</h1>
-            <p className="lead">{ survey.description }</p>
+            <h1 className="display-3">{title}</h1>
+            <p className="lead">{description}</p>
             <hr className="my-4"/>
-            <button type="" className="btn btn-outline-success btn-lg">Begin</button>
+            <button type="" className="btn btn-outline-success btn-lg pull-right" onClick={this.beginSurvey}>Begin</button>
           </div>
         )
       }
@@ -87,6 +99,14 @@
 
     class Pagination extends React.Component
     {
+      constructor(props) {
+        super(props);
+      }
+
+      setPage() {
+        //
+      }
+
       render() {
         const pages = this.props.pages;
         const current = this.props.current;
@@ -94,7 +114,7 @@
         let htmlPages = [];
         for (let i = 0; i < pages; i++) {
           htmlPages.push(
-            <li key={i} className="page-item">
+            <li key={i} className={'page-item ' + ((current == i + 1) ? 'active' : '')}>
               <a className="page-link" href={'#statement-' + (i + 1)}>{i + 1}</a>
             </li>
           );
@@ -102,19 +122,48 @@
 
         return (
           <footer className="footer">
-            <div className="container">
-              <nav aria-label="Page navigation example">
+              <nav>
                 <ul className="pagination">
-                  <li className="page-item"><a className="page-link" href="#statement-1">Previous</a></li>
+                  <li className={'page-item ' + (1 == current ? 'disabled' :'')}>
+                    <a className="page-link" href="#statement-1">Previous</a>
+                  </li>
                   {htmlPages}
-                  <li className="page-item"><a className="page-link" href={'#statement-' + pages}>Next</a></li>
+                  <li className={'page-item ' + (current == pages ? 'disabled' :'')}>
+                    <a className="page-link" href={'#statement-' + pages}>Next</a>
+                  </li>
                 </ul>
               </nav>
-            </div>
           </footer>
         )
       }
     }
+
+    class Statements extends React.Component
+    {
+      render() {
+        const statements = this.props.statements;
+        let domStatements = [];
+        for (let i = 0; i < statements.length; i++) {
+          const statement = statements[i];
+          if (1 == statement.responses.type) {
+            domStatements.push(
+              <QTypeQuick title={statement.title} responses={statement.responses}/>
+            );
+          } else if (2 == statement.responses.type) {
+            domStatements.push(
+              <QTypePercentage title={statement.title} responses={statement.responses} />
+            );
+          }
+        }
+
+        return (
+          <div class="row">
+            {domStatements}
+          </div>
+        );
+      }
+    }
+
 
     class Body extends React.Component
     {
@@ -183,9 +232,10 @@
               <h1 className="navbar-brand mb-0">Survey System</h1>
             </nav>
             <div className="container">
-              <Landing title={survey.title} description={survey.description}/>
+              <Landing title={survey.title} description={survey.description} />
+              <Statements statements={survey.statements} />
+              <Pagination pages={survey.statements.length} current="0"/>
             </div>
-            <Pagination pages="5" current="2"/>
           </div>
         )
       }
