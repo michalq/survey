@@ -27,6 +27,7 @@
     {
       render() {
         const title = this.props.title;
+        const statementNo = this.props.no;
 
         return (
           <div className="card question-card hidden">
@@ -34,11 +35,25 @@
               <h4 className="card-title">{title}</h4>
             </div>
             <div className="card-text">
-              <span className="pull-left">0%</span>
-              <output id="rangevalue">50</output>
-              <span className="pull-right">100%</span>
+              <output id="rangevalue"></output>
               <div className="clearfix"></div>
-              <input type="range" id="response-" name="response[]" value="100"/>
+              <input
+                className="form-control"
+                id={'statement-' + statementNo + '-input-0'}
+                type="range"
+                name="response[]"
+                min="0"
+                max="100"
+                step="1"
+                defaultValue="0"
+                onChange={(e) => {
+                  document.getElementById('statement-' + statementNo + '-input-0-output').value = e.target.value;
+                }} />
+              <input
+                className="form-control"
+                id={'statement-' + statementNo + '-input-0-output'}
+                type="text"
+                defaultValue="0" />
             </div>
           </div>
         )
@@ -49,6 +64,7 @@
     {
       render() {
         const title = this.props.title;
+        const statementNo = this.props.no;
 
         return (
           <div className="card question-card hidden">
@@ -56,9 +72,18 @@
               <h4 className="card-title">{title}</h4>
             </div>
             <div className="list-group list-group-flush">
-              <label className="list-group-item"><input type="radio" name="response[]" value="1"/> Yes</label>
-              <label className="list-group-item"><input type="radio" name="response[]" value="0"/> No</label>
-              <label className="list-group-item"><input type="radio" name="response[]" value="2"/> I don't know</label>
+              <label className="list-group-item">
+                <input id={'statement-' + statementNo + '-input-0'} type="radio" name={'response[' + statementNo + ']'} value="1"/>
+                <span style={{marginLeft: "20px"}}>Yes</span>
+              </label>
+              <label className="list-group-item">
+                <input id={'statement-' + statementNo + '-input-1'} type="radio" name={'response[' + statementNo + ']'} value="0"/>
+                <span style={{marginLeft: "20px"}}>No</span>
+              </label>
+              <label className="list-group-item">
+                <input id={'statement-' + statementNo + '-input-2'} type="radio" name={'response[' + statementNo + ']'} value="2"/>
+                <span style={{marginLeft: "20px"}}>I don't know</span>
+              </label>
             </div>
           </div>
         )
@@ -70,15 +95,13 @@
     {
       beginSurvey() {
         const startPage = document.querySelector('.start-page');
+        const statementsBox = document.querySelector('.statements-box');
         startPage.classList.add('animated');
         startPage.classList.add('fadeOut');
-        //webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend
         startPage.addEventListener('animationend', e => {
-          const questionCard = document.querySelector('.question-card');
           startPage.classList.add('hidden');
-          questionCard.classList.remove('hidden');
-          questionCard.classList.add('animated');
-          questionCard.classList.add('fadeIn');
+          statementsBox.classList.remove('hidden');
+          Statements.toggleStatemenent(0);
         });
       }
 
@@ -97,39 +120,113 @@
       }
     }
 
+    class Statements extends React.Component
+    {
+
+      static showStatement(statementNo) {
+        const questionCard = document.querySelectorAll('.question-card')[statementNo];
+        questionCard.classList.remove('hidden');
+      }
+
+      static hideStatements(callback) {
+        const questionCards = document.querySelectorAll('.question-card');
+        if (questionCards.length) {
+          questionCards.forEach((val, key) => {
+              val.classList.add('hidden');
+          });
+        }
+
+        callback();
+      }
+
+      static toggleStatemenent(statementNo) {
+        Statements.hideStatements(() => {
+          Statements.showStatement(statementNo);
+        });
+      }
+
+      render() {
+        const statements = this.props.statements;
+        let domStatements = [];
+        for (let i = 0; i < statements.length; i++) {
+          const statement = statements[i];
+          if (1 == statement.responses.type) {
+            domStatements.push(
+              <QTypeQuick no={i} key={i} title={statement.title} responses={statement.responses}/>
+            );
+          } else if (2 == statement.responses.type) {
+            domStatements.push(
+              <QTypePercentage no={i} key={i} title={statement.title} responses={statement.responses} />
+            );
+          }
+        }
+
+        return (
+          <div className="statements-box hidden" style={{height: "350px"}}>
+            {domStatements}
+            <Pagination pages={statements.length}/>
+          </div>
+        );
+      }
+    }
+
     class Pagination extends React.Component
     {
       constructor(props) {
         super(props);
+        this.pages = this.props.pages;
+        this.currentPage = 0;
       }
 
-      setPage() {
-        //
+      setPage(page) {
+        this.currentPage = page;
+        Statements.toggleStatemenent(page);
+        this.forceUpdate();
+      }
+
+      setPrevPage() {
+        const page = this.currentPage - 1;
+        if (page < 0) {
+          return;
+        }
+
+        this.setPage(page);
+        Statements.toggleStatemenent(page);
+      }
+
+      setNextPage() {
+        const page = this.currentPage + 1;
+        if (page >= this.pages) {
+          return;
+        }
+
+        this.setPage(page);
+        Statements.toggleStatemenent(page);
       }
 
       render() {
-        const pages = this.props.pages;
-        const current = this.props.current;
+        const pages = this.pages;
+        const current = this.currentPage;
 
         let htmlPages = [];
         for (let i = 0; i < pages; i++) {
           htmlPages.push(
-            <li key={i} className={'page-item ' + ((current == i + 1) ? 'active' : '')}>
-              <a className="page-link" href={'#statement-' + (i + 1)}>{i + 1}</a>
+            <li key={i} className={'page-item ' + ((current == i) ? 'active' : '')}>
+              <a className="page-link" href="#" onClick={() => { this.setPage(i)} }>{i + 1}</a>
             </li>
           );
         }
 
         return (
-          <footer className="footer">
+          <footer className="paginationFooter">
               <nav>
                 <ul className="pagination">
-                  <li className={'page-item ' + (1 == current ? 'disabled' :'')}>
-                    <a className="page-link" href="#statement-1">Previous</a>
+                  <li className={'page-item ' + (0 == current ? 'disabled' :'')}>
+                    <a className="page-link" href="#" onClick={() => { this.setPrevPage()} }>Previous</a>
                   </li>
                   {htmlPages}
-                  <li className={'page-item ' + (current == pages ? 'disabled' :'')}>
-                    <a className="page-link" href={'#statement-' + pages}>Next</a>
+                  <li className={'page-item ' + (current == pages - 1 ? 'disabled' :'')}>
+                    <a className="page-link" href="#" onClick={() => { this.setNextPage()} }>Next</a>
                   </li>
                 </ul>
               </nav>
@@ -138,36 +235,8 @@
       }
     }
 
-    class Statements extends React.Component
-    {
-      render() {
-        const statements = this.props.statements;
-        let domStatements = [];
-        for (let i = 0; i < statements.length; i++) {
-          const statement = statements[i];
-          if (1 == statement.responses.type) {
-            domStatements.push(
-              <QTypeQuick title={statement.title} responses={statement.responses}/>
-            );
-          } else if (2 == statement.responses.type) {
-            domStatements.push(
-              <QTypePercentage title={statement.title} responses={statement.responses} />
-            );
-          }
-        }
-
-        return (
-          <div class="row">
-            {domStatements}
-          </div>
-        );
-      }
-    }
-
-
     class Body extends React.Component
     {
-
       render() {
         const survey = {
           title: "Testowa ankieta.",
@@ -214,7 +283,7 @@
               }
             },
             {
-              title: "Pytanie testowe procentowe?",
+              title: "Pytanie testowe procentowe 3?",
               responses: {
                 type: 2,
                 data: {
@@ -234,7 +303,6 @@
             <div className="container">
               <Landing title={survey.title} description={survey.description} />
               <Statements statements={survey.statements} />
-              <Pagination pages={survey.statements.length} current="0"/>
             </div>
           </div>
         )
