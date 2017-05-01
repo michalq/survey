@@ -47,13 +47,13 @@
                 step="1"
                 defaultValue="0"
                 onChange={(e) => {
-                  document.getElementById('statement-' + statementNo + '-input-0-output').value = e.target.value;
+                  document.getElementById('statement-' + statementNo + '-input-0-output').innerHTML = e.target.value + '%';
                 }} />
-              <input
-                className="form-control"
-                id={'statement-' + statementNo + '-input-0-output'}
-                type="text"
-                defaultValue="0" />
+            </div>
+            <div className="card-block">
+              <div className="card-tect">
+                <p className="h3 text-center" id={'statement-' + statementNo + '-input-0-output'}>0%</p>
+              </div>
             </div>
           </div>
         )
@@ -204,6 +204,10 @@
         Statements.toggleStatemenent(page);
       }
 
+      finishSurvey() {
+        alert('OK');
+      }
+
       render() {
         const pages = this.pages;
         const current = this.currentPage;
@@ -217,17 +221,30 @@
           );
         }
 
+        let finalBlock = '';
+        if (current == pages - 1) {
+          finalBlock = (
+            <li className="page-item">
+              <a className="page-link" href="#" onClick={() => { this.finishSurvey()} }>Finish!</a>
+            </li>
+          );
+        } else {
+          finalBlock = (
+            <li className="page-item">
+              <a className="page-link" href="#" onClick={() => { this.setNextPage()} }>Next</a>
+            </li>
+          );
+        }
+
         return (
           <footer className="paginationFooter">
               <nav>
-                <ul className="pagination">
+                <ul className="pagination pagination-lg justify-content-center">
                   <li className={'page-item ' + (0 == current ? 'disabled' :'')}>
                     <a className="page-link" href="#" onClick={() => { this.setPrevPage()} }>Previous</a>
                   </li>
                   {htmlPages}
-                  <li className={'page-item ' + (current == pages - 1 ? 'disabled' :'')}>
-                    <a className="page-link" href="#" onClick={() => { this.setNextPage()} }>Next</a>
-                  </li>
+                  {finalBlock}
                 </ul>
               </nav>
           </footer>
