@@ -1,4 +1,5 @@
-const CsvProvider = require('../modules/survey/CsvProvider');
+const CsvProvider = require('../modules/survey/CsvProvider.js');
+const JsonProvider = require('../modules/survey/JsonProvider.js');
 
 /**
  *
@@ -24,12 +25,19 @@ class SurveyService {
             return this.survey;
         }
 
-        if (CsvProvider.TYPE != Config.survey.provider) {
-            throw new Error('Only csv provider for survey is allowed.');
+        switch (Config.survey.type) {
+            case CsvProvider.TYPE:
+                const provider = new CsvProvider(Config.survey.source);
+                break;
+            case JsonProvider.TYPE:
+                const provider = new JsonProvider(Config.survey.source);
+                break;
+            default:
+                throw new Error('Provider not allowed.');
         }
-
-        const provider = new CsvProvider(Config.survey.source);
         this.survey = provider.getSurvey();
         return this.survey;
     }
 }
+
+module.exports = SurveyService;

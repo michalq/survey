@@ -5,7 +5,7 @@ const SurveyController = require('../controllers/SurveyController.js');
 
 /* GET survey */
 router.get('/survey', (req, res, next) => {
-    (new SurveyController()).getSurveyAction();
+    (new SurveyController(res, req)).getSurveyAction();
 });
 
 /* POST reply to survey */

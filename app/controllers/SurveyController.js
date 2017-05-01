@@ -14,7 +14,9 @@ class SurveyController {
      */
     getSurveyAction() {
         try {
+            console.log('test');
             const survey = this.surveyService.getSurvey();
+            console.log(survey);
             res.json({
                 success: true,
                 data: survey.json
@@ -29,3 +31,5 @@ class SurveyController {
         }
     }
 }
+
+module.exports = SurveyController;

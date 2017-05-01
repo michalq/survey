@@ -31,17 +31,23 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    success: false,
+    status: err.status || 500,
+    error: {
+      message: "We have some troubles, but we are working hard to make it work!"
+    }
+  });
 });
 
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log('Example app listening on port 3000!')
 });
 

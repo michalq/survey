@@ -1,12 +1,9 @@
 const BaseProvider = require('./BaseProvider');
 
-/**
- * Parse CSV file and create survey.
- */
-class CsvProvider extends BaseProvider
+class JsonProvider extends BaseProvider
 {
     static get TYPE() {
-        return 'csv';
+        return 'json';
     }
 
     /**
@@ -30,4 +27,4 @@ class CsvProvider extends BaseProvider
     }
 }
 
-module.exports = CsvProvider;
+module.exports = JsonProvider;
