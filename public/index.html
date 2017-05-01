@@ -16,6 +16,7 @@
     <script src="modules/react/react.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/react/react-dom.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/babel/browser.js" type="text/javascript" charset="utf-8"></script>
+    <script src="modules/fetch/fetch.js" type="text/javascript" charset="utf-8"></script>
   </head>
 
   <body>
@@ -23,6 +24,14 @@
   </body>
 
   <script type="text/babel">
+    class SurveyService {
+      static getSurvey() {
+        return fetch('/api/v1/survey')
+          .then(checkStatus)
+          .then(parseJSON);
+      }
+    }
+
     class QTypePercentage extends React.Component
     {
       render() {
@@ -254,6 +263,16 @@
 
     class Body extends React.Component
     {
+      constructor(props) {
+        super(props);
+        SurveyService.getSurvey()
+          .then((data) => {
+            console.log('Whoa Ive got survey!', data)
+          }).catch((error) => {
+            console.log('Request failed', error)
+          });
+      }
+
       render() {
         const survey = {
           title: "Testowa ankieta.",
@@ -330,5 +349,19 @@
       <Body/>,
       document.getElementById('app')
     );
+
+    function checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return response
+      } else {
+        var error = new Error(response.statusText)
+        error.response = response
+        throw error
+      }
+    }
+
+    function parseJSON(response) {
+      return response.json()
+    }
   </script>
 </html>

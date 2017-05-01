@@ -30,3 +30,11 @@ It is easier to develop so small project and is free. The most popular and free 
 
 1. AngularJs
 2. Bootstrap
+
+## Api v1 mini doc
+
+### Get active survey
+GET /api/v1/survey
+
+### Post answers to active survey
+POST /api/v1/survey/:id/reply
