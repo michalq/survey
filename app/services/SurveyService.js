@@ -1,5 +1,5 @@
-const CsvProvider = require('../modules/survey/CsvProvider.js');
-const JsonProvider = require('../modules/survey/JsonProvider.js');
+const CsvProvider = require('../modules/survey/CsvProvider');
+const JsonProvider = require('../modules/survey/JsonProvider');
 
 /**
  *
@@ -25,12 +25,13 @@ class SurveyService {
             return this.survey;
         }
 
-        switch (Config.survey.type) {
+        let provider = null;
+        switch (config.survey.provider) {
             case CsvProvider.TYPE:
-                const provider = new CsvProvider(Config.survey.source);
+                provider = new CsvProvider(config.survey.source);
                 break;
             case JsonProvider.TYPE:
-                const provider = new JsonProvider(Config.survey.source);
+                provider = new JsonProvider(config.survey.source);
                 break;
             default:
                 throw new Error('Provider not allowed.');

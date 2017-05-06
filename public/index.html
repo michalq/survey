@@ -140,9 +140,11 @@
       static hideStatements(callback) {
         const questionCards = document.querySelectorAll('.question-card');
         if (questionCards.length) {
-          questionCards.forEach((val, key) => {
-              val.classList.add('hidden');
-          });
+          let val = '';
+          for (let key in questionCards) {
+            val = questionCards[key];
+            val.classList.add('hidden');
+          }
         }
 
         callback();

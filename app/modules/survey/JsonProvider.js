@@ -7,13 +7,15 @@ class JsonProvider extends BaseProvider
     }
 
     /**
-     * @param  {String} fileSource
+     * @param {String} fileSource
      */
     constructor(fileSource) {
+        super();
         this.fileSource = fileSource;
     }
 
     parse() {
+        this.survey = {};
         return true;
     }
 

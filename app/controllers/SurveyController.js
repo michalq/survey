@@ -1,9 +1,10 @@
 const SurveyService = require('../services/SurveyService');
+const Controller = require('./BaseController');
 
-class SurveyController {
+class SurveyController extends Controller
+{
     constructor(res, req) {
-        this.res = res;
-        this.req = req;
+        super(res, req);
         this.surveyService = new SurveyService();
     }
 
@@ -14,20 +15,15 @@ class SurveyController {
      */
     getSurveyAction() {
         try {
-            console.log('test');
             const survey = this.surveyService.getSurvey();
             console.log(survey);
-            res.json({
+            this.res.json({
                 success: true,
                 data: survey.json
             });
         } catch (err) {
-            res.json({
-                success: false,
-                error: {
-                    message: err.getMessage()
-                }
-            });
+            console.log(err);
+            this.http500(err.message);
         }
     }
 }

@@ -9,8 +9,8 @@ class Config {
         };
 
         this.survey = {
-            provider: process.env.SURVEY_PROVIDER || null,
-            source: process.env.SURVEY_SRC || null
+            provider: process.env.SURVEY_PROVIDER || 'json',
+            source: process.env.SURVEY_SRC || (__dirname + '/data/test_survey.json')
         };
     }
 }
