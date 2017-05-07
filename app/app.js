@@ -12,6 +12,7 @@ const apiv1 = require('./routes/apiv1');
 const app = express();
 
 global.config = require('./Config.js');
+global.__base = __dirname;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

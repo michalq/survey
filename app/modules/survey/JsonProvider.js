@@ -21,7 +21,7 @@ class JsonProvider extends BaseProvider
     }
 
     parse() {
-        const rawSurvey = JSON.parse(fs.readFileSync(this.fileSource, 'utf8'));
+        const rawSurvey = JSON.parse(fs.readFileSync(__base + this.fileSource, 'utf8'));
 
         this.survey = new Survey();
         this.survey.title = rawSurvey.title;

@@ -12,6 +12,14 @@ Before running you must provide some environment variables.
 - DB_PROVIDER - [mandatory] - database provider (available options: sqlite3),
 - DB_HOST - [mandatory] - database host (in case of sqlite3 it is file path to database file or just :memory: if you want keep yur data in memory but it is not recommended option to keep database in memory).
 
+## Run server
+
+```
+PORT=3001 \
+SURVEY_PROVIDER=json \
+SURVEY_SRC=/data/test_survey.json \
+./app/bin/www
+```
 # System information
 
 ## Backend
