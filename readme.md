@@ -2,6 +2,7 @@
 
 ## Dependencies in back-end app
 ```
+cd app
 npm install
 ```
 
@@ -36,7 +37,7 @@ SURVEY_PROVIDER=json \
 SURVEY_SRC=$(pwd)/app/data/test_survey.json \
 DB_PROVIDER=sqlite3 \
 DB_HOST=~/db/surveyDb.sqlite \
-./app/bin/www
+forever start -c ./app/bin/www
 ```
 # System information
 
