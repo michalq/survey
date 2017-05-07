@@ -1,8 +1,16 @@
+const StatementType = require('./StatementType');
+
 /**
  * Class represents single question or statement with options.
  */
-class Statement {
-    construct(title, type, responses) {
+class Statement
+{
+    /**
+     * @param  {String} title
+     * @param  {Numeric} type
+     * @param  {Array} responses
+     */
+    constructor(title, type, responses) {
         /**
          * Statement title.
          * @type {String}
@@ -10,12 +18,12 @@ class Statement {
         this.title = title;
 
         /**
-         * Response type fe. TYPE_CUSTOM for custom, TYPE_PERCENTAGE for percentage etc.
-         * @type {[type]}
+         * Response type.
+         * @type {Numeric}
          */
         this.type = type;
 
-        if (type == this.TYPE_CUSTOM && responses.length > 0) {
+        if (type == StatementType.Custom && responses.length > 0) {
             /**
              * Custom responses.
              * @type {Array}
@@ -25,33 +33,30 @@ class Statement {
     }
 
     /**
-     * Reply as an short answer yes or no.
+     * @param  {Numeric} type
      */
-    get TYPE_YES_NO() {
-        return 1;
+    set type(type) {
+        if (this.allowedTypes.indexOf(type) == -1) {
+            throw new Error('Type ' + type + 'is not allowed.');
+        }
+
+        this._type = type;
     }
 
     /**
-     * Reply in percent in 0-100.
+     * @return {Numeric}
      */
-    get TYPE_PERCENTAGE() {
-        return 2;
-    }
-
-    /**
-     * Custom type.
-     */
-    get TYPE_CUSTOM() {
-        return 3;
+    get type() {
+        return this._type;
     }
 
     /**
      * @return {String}
      */
     get responses() {
-        if (this.type == this.TYPE_YES_NO) {
+        if (this.type == StatementType.Short) {
             return {
-                "type": this.TYPE_YES_NO,
+                "type": StatementType.Short,
                 "data": [
                     {
                         "label": "Yes",
@@ -59,15 +64,19 @@ class Statement {
                     },
                     {
                         "label": "No",
+                        "value": 0
+                    },
+                    {
+                        "label": "I don't know",
                         "value": 2
                     }
                 ]
             };
         }
 
-        if (this.type == this.TYPE_PERCENTAGE) {
+        if (this.type == StatementType.Percentage) {
             return {
-                "type": this.TYPE_PERCENTAGE,
+                "type": StatementType.Percentage,
                 "data": {
                     "start": 0,
                     "end": 100
@@ -75,12 +84,14 @@ class Statement {
             }
         }
 
-        if (this.type == this.TYPE_CUSTOM) {
+        if (this.type == StatementType.Custom) {
             return {
-                "type": this.TYPE_CUSTOM,
+                "type": StatementType.Custom,
                 "data": this.responses
             }
         }
+
+        return { type: null }
     }
 
     /**
@@ -88,7 +99,7 @@ class Statement {
      * @param {Object} responses
      */
     set responses(responses) {
-        if (this.type != this.TYPE_CUSTOM) {
+        if (this.type != StatementType.Custom) {
             throw new Error('This statement doesn\'t allow to custom responses.');
         }
 
@@ -140,3 +151,5 @@ class Statement {
         this.responseType = type;
     }
 }
+
+module.exports = Statement;

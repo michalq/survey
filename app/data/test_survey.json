@@ -1,1 +1,26 @@
-{}
+{
+    "title": "Testowa ankieta.",
+    "description": "Opis testowej ankiety",
+    "statements": [
+        {
+            "statement": "Statement with short answer?",
+            "type": 1
+        },
+        {
+            "statement": "Do you think you'l pass the exam?",
+            "type": 1
+        },
+        {
+            "statement": "What kind of alcohol do you often drink?",
+            "type": 2
+        },
+        {
+            "statement": "What do you think about this survey?",
+            "type": 1
+        },
+        {
+            "statement": "Percentage!",
+            "type": 2
+        }
+    ]
+}

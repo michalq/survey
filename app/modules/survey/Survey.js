@@ -1,3 +1,5 @@
+const Statement = require('./Statement');
+
 /**
  * Class represents single survey.
  */
@@ -28,9 +30,9 @@ class Survey
      * @param {Array} responses
      */
     addStatement(title, type, responses) {
-        const preparedNode = new Statement(title, type, responses);
-
-        this.statements.push(preparedNode);
+        this.statements.push(
+            new Statement(title, type, responses)
+        );
     }
 
     get json() {

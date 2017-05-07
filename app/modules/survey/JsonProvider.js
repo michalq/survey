@@ -1,5 +1,11 @@
 const BaseProvider = require('./BaseProvider');
+const StatementType = require('./StatementType');
+const Survey = require('./Survey');
+const fs = require('fs');
 
+/**
+ *
+ */
 class JsonProvider extends BaseProvider
 {
     static get TYPE() {
@@ -15,8 +21,17 @@ class JsonProvider extends BaseProvider
     }
 
     parse() {
-        this.survey = {};
-        return true;
+        const rawSurvey = JSON.parse(fs.readFileSync(this.fileSource, 'utf8'));
+
+        this.survey = new Survey();
+        this.survey.title = rawSurvey.title;
+        this.survey.description = rawSurvey.description;
+        for (let i = 0; i < rawSurvey.statements.length; i++) {
+            const tmpStatement = rawSurvey.statements[i];
+            this.survey.addStatement(tmpStatement.statement, tmpStatement.type);
+        }
+
+        return this;
     }
 
     getSurvey() {
@@ -24,8 +39,7 @@ class JsonProvider extends BaseProvider
             return this.survey;
         }
 
-        this.parse();
-        return this.survey;
+        return this.parse().survey;
     }
 }
 
