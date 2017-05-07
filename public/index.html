@@ -141,8 +141,8 @@
         const questionCards = document.querySelectorAll('.question-card');
         if (questionCards.length) {
           let val = '';
-          for (let key in questionCards) {
-            val = questionCards[key];
+          for (let i = 0; i < questionCards.length; i++) {
+            val = questionCards[i];
             val.classList.add('hidden');
           }
         }

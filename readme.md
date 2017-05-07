@@ -33,9 +33,9 @@ Before running you must provide some environment variables.
 ```
 PORT=3001 \
 SURVEY_PROVIDER=json \
-SURVEY_SRC=~/repo/survey/data/test_survey.json \
-DB_PROVIDER=sqlite3
-DB_HOST=~/db/surveyDb.sqlite
+SURVEY_SRC=$(pwd)/app/data/test_survey.json \
+DB_PROVIDER=sqlite3 \
+DB_HOST=~/db/surveyDb.sqlite \
 ./app/bin/www
 ```
 # System information
