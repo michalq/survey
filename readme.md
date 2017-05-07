@@ -1,6 +1,22 @@
 # Installation
 
+## Dependencies in back-end app
+```
 npm install
+```
+
+## Dependencies in front-end app
+```
+cd public
+bower install
+```
+
+## Database
+If you want to use sqlite you have to create empty file like this
+```
+mkdir ~/db && touch ~/db/surveyDb.sqlite
+```
+you have to provide path to this file while running application (see section below).
 
 # Running
 
@@ -17,7 +33,9 @@ Before running you must provide some environment variables.
 ```
 PORT=3001 \
 SURVEY_PROVIDER=json \
-SURVEY_SRC=/data/test_survey.json \
+SURVEY_SRC=~/repo/survey/data/test_survey.json \
+DB_PROVIDER=sqlite3
+DB_HOST=~/db/surveyDb.sqlite
 ./app/bin/www
 ```
 # System information
