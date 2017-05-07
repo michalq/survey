@@ -63,4 +63,4 @@ It is easier to develop so small project and is free. The most popular and free 
 GET /api/v1/survey
 
 ### Post answers to active survey
-POST /api/v1/survey/:id/reply
+POST /api/v1/survey/reply
