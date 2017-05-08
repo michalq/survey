@@ -1,9 +1,10 @@
-FROM node:0.10.38
+FROM node:latest
 
 RUN mkdir /src
 
 RUN npm install forever -g
+RUN npm install bower -g
 
 WORKDIR /src
-ADD package.json package.json
-RUN npm install
+
+RUN cd app && npm install && cd ../public bower install
