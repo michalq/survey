@@ -26,6 +26,7 @@
     "react": "^15.5.4",
     "babel": "^5.8.38",
     "animate.css": "^3.5.2",
-    "fetch": "^2.0.3"
+    "fetch": "^2.0.3",
+    "Ionicons": "ionicons#^2.0.1"
   }
 }

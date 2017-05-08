@@ -11,6 +11,7 @@
     <link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="modules/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="modules/Ionicons/css/ionicons.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <script src="modules/react/react.js" type="text/javascript" charset="utf-8"></script>
@@ -28,7 +29,9 @@
       static getSurvey() {
         return fetch('/api/v1/survey')
           .then(checkStatus)
-          .then(parseJSON);
+          .then((data) => {
+            return data.json();
+          });
       }
     }
 
@@ -216,7 +219,10 @@
       }
 
       finishSurvey() {
-        alert('OK');
+        ReactDOM.render(
+          <FinishPage/>,
+          document.getElementById('app')
+        );
       }
 
       render() {
@@ -275,9 +281,7 @@
 
         return (
           <div>
-            <nav className="navbar navbar-light bg-faded">
-              <h1 className="navbar-brand mb-0">Survey System</h1>
-            </nav>
+            <Navi/>
             <div className="container">
               <Landing title={survey.title} description={survey.description} />
               <Statements statements={survey.statements} />
@@ -285,6 +289,41 @@
           </div>
         )
       }
+    }
+
+    class Navi extends React.Component
+    {
+      render() {
+        return (
+          <nav className="navbar navbar-light bg-faded">
+            <h1 className="navbar-brand mb-0">Survey System</h1>
+          </nav>
+        );
+      }
+    }
+
+    class FinishPage extends React.Component
+    {
+        render() {
+            return (
+              <div>
+                <div className="finish-page container mx-auto" style={{width: "600px"}}>
+                  <div className="card text-center">
+                    <div className="card-block">
+                      <p className="h1"><i className="text-success ion-checkmark-circled"></i></p>
+                      <h4 className="card-title">Responses were sent.</h4>
+                      <p className="card-text">Thanks for your time!</p>
+                      <p className="card-text">
+                        <small className="text-muted mr-2">&copy; 2017</small>
+                        <small className="text-muted mr-2"><a href="mailto:kutrzeba.michal@gmail.com">Michał Kutrzeba</a></small>
+                        <small className="text-muted"><a href="https://www.linkedin.com/in/micha%C5%82-kutrzeba-69134167/"><i className="ion-social-linkedin-outline"></i></a></small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+        }
     }
 
     SurveyService.getSurvey()
@@ -309,10 +348,6 @@
         error.response = response
         throw error
       }
-    }
-
-    function parseJSON(response) {
-      return response.json()
     }
   </script>
 </html>
