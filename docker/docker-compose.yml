@@ -1,0 +1,23 @@
+web:
+  build: ./app
+  volumes:
+    - "./app:/src/app"
+    - "./public:/src/public"
+  ports:
+    - "3030:3000"
+  links:
+    - "db:redis"
+  command: forever start app/bin/www
+
+postgres:
+  image: postgres:9.6
+  restart: always
+  volumes:
+    - ./postgresql/data:/var/lib/postgresql/data
+  ports:
+    - "5432:5432"
+  environment:
+    PGDATA: /var/lib/postgresql/data
+    POSTGRES_USER: docker
+    POSTGRES_PASSWORD: docker
+    POSTGRES_DB: docker
