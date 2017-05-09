@@ -7,7 +7,14 @@ web:
     - "3030:3000"
   links:
     - db
-  command: forever start app/bin/www
+  command: nodemon -L app/bin/www
+  environment:
+    PORT: 3000
+    SURVEY_PROVIDER: json
+    SURVEY_SRC: /src/app/data/test_survey.json
+    DB_PROVIDER: mysql
+    DB_USER: docker
+    DB_PASS: docker
 
 db:
   image: mysql:latest

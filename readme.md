@@ -43,8 +43,8 @@ npm install forever -g
 PORT=3001 \
 SURVEY_PROVIDER=json \
 SURVEY_SRC=$(pwd)/app/data/test_survey.json \
-DB_PROVIDER=sqlite3 \
-DB_HOST=~/db/surveyDb.sqlite \
+DB_PROVIDER=mysql \
+DB_HOST=localhost \
 forever start -c ./app/bin/www
 ```
 
