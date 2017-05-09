@@ -1,23 +1,21 @@
 web:
-  build: ./app
+  build: .
   volumes:
     - "./app:/src/app"
     - "./public:/src/public"
   ports:
     - "3030:3000"
   links:
-    - "db:postgres"
+    - db
   command: forever start app/bin/www
 
-postgres:
-  image: postgres:9.6
-  restart: always
+db:
+  image: mysql:latest
   volumes:
-    - ./postgresql/data:/var/lib/postgresql/data
-  ports:
-    - "5432:5432"
+    - ../db/survey:/var/lib/mysql
+  restart: always
   environment:
-    PGDATA: /var/lib/postgresql/data
-    POSTGRES_USER: docker
-    POSTGRES_PASSWORD: docker
-    POSTGRES_DB: docker
+    MYSQL_ROOT_PASSWORD: docker
+    MYSQL_DATABASE: docker
+    MYSQL_USER: docker
+    MYSQL_PASSWORD: docker
