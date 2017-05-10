@@ -4,10 +4,10 @@ web:
     - "./app:/src/app"
     - "./public:/src/public"
   ports:
-    - "3030:3000"
+    - "3001:3000"
   links:
     - db
-  command: nodemon -L app/bin/www
+  command: ./app/node_modules/nodemon/bin/nodemon.js --legacy-watch app/bin/www
   environment:
     PORT: 3000
     SURVEY_PROVIDER: json

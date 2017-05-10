@@ -2,7 +2,6 @@ FROM node:latest
 
 RUN mkdir /src
 
-RUN npm install nodemon -g
 RUN npm install bower -g
 
 WORKDIR /src
