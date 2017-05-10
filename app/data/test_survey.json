@@ -1,24 +1,30 @@
 {
+    "id": 1,
     "title": "Testowa ankieta.",
     "description": "Opis testowej ankiety",
     "statements": [
         {
+            "id": 1,
             "statement": "Statement with short answer?",
             "type": 1
         },
         {
+            "id": 2,
             "statement": "Do you think you'l pass the exam?",
             "type": 1
         },
         {
+            "id": 3,
             "statement": "What kind of alcohol do you often drink?",
             "type": 2
         },
         {
+            "id": 4,
             "statement": "What do you think about this survey?",
             "type": 1
         },
         {
+            "id": 5,
             "statement": "Percentage!",
             "type": 2
         }

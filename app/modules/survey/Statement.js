@@ -6,11 +6,18 @@ const StatementType = require('./StatementType');
 class Statement
 {
     /**
+     * @param  {Number} id
      * @param  {String} title
      * @param  {Numeric} type
      * @param  {Array} responses
      */
-    constructor(title, type, responses) {
+    constructor(id, title, type, responses) {
+        /**
+         * Statement identifier.
+         * @type {Number}
+         */
+        this.id = id;
+
         /**
          * Statement title.
          * @type {String}
@@ -81,17 +88,19 @@ class Statement
                     "start": 0,
                     "end": 100
                 }
-            }
+            };
         }
 
         if (this.type == StatementType.Custom) {
             return {
                 "type": StatementType.Custom,
                 "data": this.responses
-            }
+            };
         }
 
-        return { type: null }
+        return {
+            type: null
+        };
     }
 
     /**
@@ -130,6 +139,7 @@ class Statement
      */
     get json() {
         return {
+            id: this.id,
             title: this.title,
             response: this.responses
         };

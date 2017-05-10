@@ -7,6 +7,11 @@ class Survey
 {
     constructor() {
         /**
+         * Survey identifier.
+         * @type {Number}
+         */
+        this.id = null;
+        /**
          * Survey title.
          * @type {String}
          */
@@ -29,14 +34,15 @@ class Survey
      * @param {Number} type
      * @param {Array} responses
      */
-    addStatement(title, type, responses) {
+    addStatement(id, title, type, responses) {
         this.statements.push(
-            new Statement(title, type, responses)
+            new Statement(id, title, type, responses)
         );
     }
 
     get json() {
         const json = {
+            id: this.id,
             title: this.title,
             description: this.description,
             statements: []
