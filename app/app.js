@@ -20,6 +20,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: config.db.host,
+    user: config.db.user,
+    password: config.db.password,
+    database: config.db.database
+});
+
 // Set routes
 app.use('/', index);
 app.use('/api/v1', apiv1);
