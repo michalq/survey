@@ -30,6 +30,16 @@ class Statement
          */
         this.type = type;
 
+        /**
+         * @type {Number}
+         */
+        this.minValue = 0;
+
+        /**
+         * @type {Number}
+         */
+        this.maxValue = 100;
+
         if (type == StatementType.Custom && responses.length > 0) {
             /**
              * Custom responses.
@@ -45,6 +55,14 @@ class Statement
     set type(type) {
         if (this.allowedTypes.indexOf(type) == -1) {
             throw new Error('Type ' + type + 'is not allowed.');
+        }
+
+        if (StatementType.Short == type) {
+            this.minValue = 0;
+            this.maxValue = 2;
+        } else if (StatementType.Percentage == type) {
+            this.minValue = 0;
+            this.maxValue = 100;
         }
 
         this._type = type;

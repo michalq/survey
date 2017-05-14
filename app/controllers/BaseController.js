@@ -11,6 +11,7 @@ class BaseController
      * @param  {String} msg [description]
      */
     http500(msg) {
+        this.res.statusCode = 500;
         this.res.json({
             success: false,
             code: 500,
