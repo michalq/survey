@@ -12,17 +12,20 @@ web:
     PORT: 3000
     SURVEY_PROVIDER: json
     SURVEY_SRC: /src/app/data/test_survey.json
-    DB_PROVIDER: mysql
+    DB_HOST: localhost
     DB_USER: docker
     DB_PASS: docker
+    DB_DB: survey
 
 db:
   image: mysql:latest
   volumes:
     - ../db/survey:/var/lib/mysql
+    - ./app/database/migrations/init_schema.sql:/tmp/init_schema.sql
+    - ./app/database/migrations/init.sh:/tmp/import.sh
   restart: always
   environment:
     MYSQL_ROOT_PASSWORD: docker
-    MYSQL_DATABASE: docker
+    MYSQL_DATABASE: survey
     MYSQL_USER: docker
     MYSQL_PASSWORD: docker

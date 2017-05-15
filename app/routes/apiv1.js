@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const SurveyController = require('../controllers/SurveyController.js');
+const SurveyController = require('../controllers/SurveyController');
+const ReplyController = require('../controllers/ReplyController');
 
 /* GET survey */
 router.get('/survey', (req, res, next) => {
@@ -9,8 +10,8 @@ router.get('/survey', (req, res, next) => {
 });
 
 /* POST reply to survey */
-router.post('/survey/:id/reply', (req, res, next) => {
-    console.log('New survey reply.');
+router.post('/survey/reply', (req, res, next) => {
+    (new ReplyController(res, req)).newReplyAction(res, req);
 });
 
 module.exports = router;

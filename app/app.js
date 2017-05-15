@@ -20,14 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: config.db.host,
-    user: config.db.user,
-    password: config.db.password,
-    database: config.db.database
-});
-
 // Set routes
 app.use('/', index);
 app.use('/api/v1', apiv1);
@@ -49,10 +41,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
     success: false,
-    status: err.status || 500,
-    error: {
-      message: "We have some troubles, but we are working hard to make it work!"
-    }
+    status: err.status || 500
   });
 });
 

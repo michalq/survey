@@ -1,12 +1,9 @@
+const BaseResource = require('./BaseResource');
 
-class ReplyResource {
-    constructor(connection) {
-        /**
-         * @type {Object}
-         */
-        this.connection = connection;
-    }
-
+/**
+ *
+ */
+class ReplyResource extends BaseResource {
     /**
      * Add replies to survey.
      *
@@ -29,3 +26,5 @@ class ReplyResource {
         });
     }
 }
+
+module.exports = ReplyResource;

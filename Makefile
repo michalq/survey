@@ -1,6 +1,10 @@
-run:
-	@echo 'Running server.'
+up:
+	@echo 'Running server'
 	docker-compose up -d
+
+down:
+	@echo 'Stopping server'
+	docker-compose down
 
 hosts:
 	@echo 'Container hosts.'
@@ -9,3 +13,7 @@ hosts:
 db:
 	@echo 'Connecting to database.'
 	docker-compose run db bash -c 'mysql -h db -u docker -pdocker docker'
+
+migration:
+	@echo 'Migration database'
+	docker-compose run db bash -c './tmp/import.sh '

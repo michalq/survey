@@ -25,12 +25,6 @@ class Statement
         this.title = title;
 
         /**
-         * Response type.
-         * @type {Numeric}
-         */
-        this.type = type;
-
-        /**
          * @type {Number}
          */
         this.minValue = 0;
@@ -39,6 +33,17 @@ class Statement
          * @type {Number}
          */
         this.maxValue = 100;
+
+        /**
+         * Response type.
+         * @type {Numeric}
+         */
+        this.type = type;
+
+        if (StatementType.Short == type) {
+            this.minValue = 0;
+            this.maxValue = 2;
+        }
 
         if (type == StatementType.Custom && responses.length > 0) {
             /**
@@ -53,16 +58,9 @@ class Statement
      * @param  {Numeric} type
      */
     set type(type) {
+        console.log('test');
         if (this.allowedTypes.indexOf(type) == -1) {
             throw new Error('Type ' + type + 'is not allowed.');
-        }
-
-        if (StatementType.Short == type) {
-            this.minValue = 0;
-            this.maxValue = 2;
-        } else if (StatementType.Percentage == type) {
-            this.minValue = 0;
-            this.maxValue = 100;
         }
 
         this._type = type;
