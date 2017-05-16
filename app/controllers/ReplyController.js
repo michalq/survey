@@ -2,6 +2,7 @@ const ReplyResource = require('../resources/ReplyResource');
 const SurveyService = require('../services/SurveyService');
 const Controller = require('./BaseController');
 const mysql = require('mysql');
+const moment = require('moment');
 
 /**
  *
@@ -25,7 +26,7 @@ class ReplyController extends Controller {
             return;
         }
 
-        const replies = [];
+        const replies = validator.replies;
 
         const connection = mysql.createConnection({
             host: config.db.host,
@@ -36,7 +37,7 @@ class ReplyController extends Controller {
 
         const replyResource = new ReplyResource(connection);
 
-        replyResource.insertReplies(survey.id, replies)
+        replyResource.insertReplies(survey.id, moment(new Date()), replies)
             .then((data) => {
                 res.statusCode = 201;
                 res.json({
@@ -44,7 +45,8 @@ class ReplyController extends Controller {
                 });
             })
             .catch((err) => {
-                this.displayInternalError(err);
+                // @todo err should be logged.
+                this.displayInternalError('Encountered internal database error.');
             });
     }
 

@@ -12,8 +12,8 @@ hosts:
 
 db:
 	@echo 'Connecting to database.'
-	docker-compose run db bash -c 'mysql -h db -u docker -pdocker docker'
+	docker-compose run db bash -c "mysql -h db -u docker -pdocker survey"
 
 migration:
 	@echo 'Migration database'
-	docker-compose run db bash -c './tmp/import.sh '
+	docker-compose run db bash -c '/tmp/import.sh'

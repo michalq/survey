@@ -12,10 +12,11 @@ web:
     PORT: 3000
     SURVEY_PROVIDER: json
     SURVEY_SRC: /src/app/data/test_survey.json
-    DB_HOST: localhost
+    DB_HOST: db
     DB_USER: docker
     DB_PASS: docker
     DB_DB: survey
+    DB_PORT: 3306
 
 db:
   image: mysql:latest
