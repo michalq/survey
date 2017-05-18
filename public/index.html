@@ -35,8 +35,33 @@
       }
     }
 
-    class QTypePercentage extends React.Component
+    class QuestionType extends React.Component
     {
+      constructor(props) {
+        super(props);
+        this.state = {value: ''};
+        if (typeof props.id == "undefined" || !props.id) {
+          console.log('Statement doesn\'t have privided identifier.');
+        }
+
+        this.id = props.id;
+        this.handleChange = this.handleChange.bind(this);
+      }
+
+      handleChange(event) {
+        this.setState({value: event.target.value});
+      }
+    }
+
+    class QTypePercentage extends QuestionType
+    {
+      handleChange(event) {
+        this.setState({value: event.target.value});
+        document
+          .getElementById('statement-' + statementNo + '-input-0-output')
+          .innerHTML = e.target.value + '%';
+      }
+
       render() {
         const title = this.props.title;
         const statementNo = this.props.no;
@@ -58,9 +83,7 @@
                 max="100"
                 step="1"
                 defaultValue="0"
-                onChange={(e) => {
-                  document.getElementById('statement-' + statementNo + '-input-0-output').innerHTML = e.target.value + '%';
-                }} />
+                onChange={this.handleChange} />
             </div>
             <div className="card-block">
               <div className="card-tect">
@@ -72,7 +95,7 @@
       }
     }
 
-    class QTypeQuick extends React.Component
+    class QTypeQuick extends QuestionType
     {
       render() {
         const title = this.props.title;
@@ -85,15 +108,30 @@
             </div>
             <div className="list-group list-group-flush">
               <label className="list-group-item">
-                <input id={'statement-' + statementNo + '-input-0'} type="radio" name={'response[' + statementNo + ']'} value="1"/>
+                <input
+                  id={'statement-' + statementNo + '-input-0'}
+                  type="radio"
+                  name={'response[' + statementNo + ']'}
+                  value="1"
+                  onChange={this.handleChange} />
                 <span style={{marginLeft: "20px"}}>Yes</span>
               </label>
               <label className="list-group-item">
-                <input id={'statement-' + statementNo + '-input-1'} type="radio" name={'response[' + statementNo + ']'} value="0"/>
+                <input
+                  id={'statement-' + statementNo + '-input-1'}
+                  type="radio"
+                  name={'response[' + statementNo + ']'}
+                  value="0"
+                  onChange={this.handleChange} />
                 <span style={{marginLeft: "20px"}}>No</span>
               </label>
               <label className="list-group-item">
-                <input id={'statement-' + statementNo + '-input-2'} type="radio" name={'response[' + statementNo + ']'} value="2"/>
+                <input
+                  id={'statement-' + statementNo + '-input-2'}
+                  type="radio"
+                  name={'response[' + statementNo + ']'}
+                  value="2"
+                  onChange={this.handleChange} />
                 <span style={{marginLeft: "20px"}}>I don't know</span>
               </label>
             </div>
@@ -166,11 +204,19 @@
           const statement = statements[i];
           if (1 == statement.response.type) {
             domStatements.push(
-              <QTypeQuick no={i} key={i} title={statement.title} responses={statement.response}/>
+              <QTypeQuick
+                id={statement.id}
+                key={i}
+                title={statement.title}
+                responses={statement.response} />
             );
           } else if (2 == statement.response.type) {
             domStatements.push(
-              <QTypePercentage no={i} key={i} title={statement.title} responses={statement.response} />
+              <QTypePercentage
+                id={statement.id}
+                key={i}
+                title={statement.title}
+                responses={statement.response} />
             );
           }
         }
