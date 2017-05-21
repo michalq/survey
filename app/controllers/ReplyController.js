@@ -45,7 +45,7 @@ class ReplyController extends Controller {
                 });
             })
             .catch((err) => {
-                // @todo err should be logged.
+                console.log(err);
                 this.displayInternalError('Encountered internal database error.');
             });
     }

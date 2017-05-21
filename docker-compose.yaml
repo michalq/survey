@@ -6,7 +6,7 @@ web:
   ports:
     - "3001:3000"
   links:
-    - db
+    - db:db
   command: ./app/node_modules/nodemon/bin/nodemon.js --legacy-watch app/bin/www
   environment:
     PORT: 3000
