@@ -25,9 +25,6 @@
   </body>
 
   <script type="text/babel">
-    /**
-     *
-     */
     class SurveyService {
       /**
        * @return {Promise}
@@ -96,6 +93,7 @@
           <div className="card question-card hidden">
             <div className="card-block">
               <h4 className="card-title">{title}</h4>
+              {this.state.error ? <p className="alert alert-danger"><strong>Error</strong> {this.state.error}</p> : null}
             </div>
             <div className="card-text">
               <output id="rangevalue"></output>
@@ -131,6 +129,7 @@
           <div className="card question-card hidden">
             <div className="card-block">
               <h4 className="card-title">{title}</h4>
+              {this.state.error ? <p className="alert alert-danger"><strong>Error</strong> {this.state.error}</p> : null}
             </div>
             <div className="list-group list-group-flush">
               <label className="list-group-item">
@@ -258,6 +257,29 @@
               <FinishPage/>,
               document.getElementById('app')
             );
+          }).catch((data) => {
+            data.response.json().then((data) => {
+              console.log(data);
+              let i = 0;
+              const errorsRemapped = [];
+              for (let i = 0; i < data.errors.length; i++) {
+                errorsRemapped[data.errors[i].statementId] = data.errors[i];
+              }
+
+              for (let i = 0; i < this.statements.length; i++) {
+                const stat = this.statements[i];
+                const err = errorsRemapped[stat.id];
+                let errorMsg = '';
+                if (typeof err != 'undefined') {
+                  errorMsg = err.message;
+                }
+
+                stat.setState({
+                  value: stat.state.value,
+                  error: errorMsg
+                });
+              }
+            });
           });
       }
 
