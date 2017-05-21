@@ -25,9 +25,35 @@
   </body>
 
   <script type="text/babel">
+    /**
+     *
+     */
     class SurveyService {
+      /**
+       * @return {Promise}
+       */
       static getSurvey() {
         return fetch('/api/v1/survey')
+          .then(checkStatus)
+          .then((data) => {
+            return data.json();
+          });
+      }
+
+      /**
+       * @param  {Object} replies
+       * @return {Promise}
+       */
+      static sendReplies(replies) {
+        return fetch('/api/v1/survey/reply',
+          {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({data: replies})
+          })
           .then(checkStatus)
           .then((data) => {
             return data.json();
@@ -58,13 +84,13 @@
       handleChange(event) {
         this.setState({value: event.target.value});
         document
-          .getElementById('statement-' + statementNo + '-input-0-output')
-          .innerHTML = e.target.value + '%';
+          .getElementById('statement-' + this.id + '-input-0-output')
+          .innerHTML = event.target.value + '%';
       }
 
       render() {
         const title = this.props.title;
-        const statementNo = this.props.no;
+        const statementNo = this.id;
 
         return (
           <div className="card question-card hidden">
@@ -217,16 +243,22 @@
        */
       sendResponses(e) {
         e.preventDefault();
-        const formData = {};
-        for (const field in this.refs) {
-          formData[field] = this.refs[field].value;
+        const formData = [];
+        for (let i = 0; i < this.statements.length; i++) {
+          formData[i] = {
+            statementId: this.statements[i].id,
+            value: this.statements[i].state.value
+          };
         }
 
-        console.log(this.refs);
-        ReactDOM.render(
-          <FinishPage/>,
-          document.getElementById('app')
-        );
+        SurveyService.sendReplies(formData)
+          .then((data) => {
+            console.log(data);
+            ReactDOM.render(
+              <FinishPage/>,
+              document.getElementById('app')
+            );
+          });
       }
 
       /**
@@ -242,7 +274,7 @@
               <QuestionQuick
                 id={statement.id}
                 key={i}
-                ref={statement => { this.statements[] = statement; }}
+                ref={(statement) => { this.statements.push(statement); }}
                 title={statement.title}
                 responses={statement.response} />
             );
@@ -251,7 +283,7 @@
               <QuestionPercentage
                 id={statement.id}
                 key={i}
-                ref={statement => { this.statements[] = statement; }}
+                ref={(statement) => { this.statements.push(statement); }}
                 title={statement.title}
                 responses={statement.response} />
             );

@@ -174,6 +174,16 @@ Json provider provide very readable schema, that looks as follow:
     POST /api/v1/survey/reply
 
  + Response 200
+ + Body
+    {
+        data: [
+            {
+                statementId: 1,
+                value: 1
+            },
+            ...
+        ]
+    }
 
 
 ## Errors
