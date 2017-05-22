@@ -10,8 +10,8 @@ web:
   command: ./app/node_modules/nodemon/bin/nodemon.js --legacy-watch app/bin/www
   environment:
     PORT: 3000
-    SURVEY_PROVIDER: json
-    SURVEY_SRC: /src/app/data/test_survey.json
+    SURVEY_PROVIDER: csv
+    SURVEY_SRC: /src/app/data/test_survey.csv
     DB_HOST: db
     DB_USER: docker
     DB_PASS: docker

@@ -4,31 +4,33 @@
 2. [Running](#2-running)
 2.1. [Run server without docker](#21-run-server-without-docker)
 2.2. [Running usind Docker](#22-running-usind-docker)
-3. [System information](#3-system-information)
-3.1. [Backend](#31-backend)
-3.2. [Frontend](#32-frontend)
-4. [Survey providers](#4-survey-providers)
-4.1. [CSV provider](#41-csv-provider)
-4.2. [JSON provider](#42-json-provider)
-5. [RestAPI documentation](#5-restapi-documentation)
+3. [Survey providers](#3-survey-providers)
+3.1. [Predefined survey types](#31-predefined-survey-types)
+3.2. [CSV provider](#32-csv-provider)
+3.3. [JSON provider](#33-json-provider)
+4. [RestAPI documentation](#4-restapi-documentation)
 
 # 1. Installation
 
-**Dependencies in back-end app.**
+**Prerequisites**
 
 1. NodeJs
-2. MySQL
-3. NPM
+2. NPM
+   Node Package Manager - manages node dependencies.
+3. Bower
+   Package manager for frontend dependencies.
+4. MySQL
+   Default database engine.
+5. Make
+   Optional but very useful to quick run commands specified in Makefile - especially in developement time.
 
-**Other dependencies**
-```
+**Installation**
+
+```bash
+# Backend dependencies
 cd app
 npm install
-```
-
-**Dependencies in front-end app.**
-
-```
+# Frontend dependencies
 cd public
 bower install
 ```
@@ -50,7 +52,7 @@ Everything is set up and and ready to develop. If you want use docker, jump dire
 
 ## 2.1. Run server without docker
 
-You can run server daemonized using forever for example.
+In production environment it is recommended to use 'forever' to run application.
 
 Forever is installed using npm, to do so, type in terminal:
 
@@ -62,8 +64,8 @@ npm install forever -g
 
 ```bash
 PORT=3001 \
-SURVEY_PROVIDER=json \
-SURVEY_SRC=$(pwd)/app/data/test_survey.json \
+SURVEY_PROVIDER=csv \
+SURVEY_SRC=$(pwd)/app/data/test_survey.csv \
 DB_PROVIDER=mysql \
 DB_HOST=localhost \
 DB_USER=docker \
@@ -71,22 +73,9 @@ DB_PASS=docker \
 forever start -c ./app/bin/www
 ```
 
-... or you can run directly ...
-
-```bash
-PORT=3001 \
-SURVEY_PROVIDER=json \
-SURVEY_SRC=$(pwd)/app/data/test_survey.json \
-DB_PROVIDER=mysql \
-DB_HOST=localhost \
-DB_USER=docker \
-DB_PASS=docker \
-./app/bin/www
-```
-
 ## 2.2. Running usind Docker
 
-**Dependencies**
+**Prerequisites**
 
 1. Docker
 2. Docker compose
@@ -95,26 +84,21 @@ DB_PASS=docker \
 
 ```bash
 docker-compose up -d
+# or using Makefile
+make up
 ```
 
-# 3. System information
+# 3. Survey providers
 
-## 3.1. Backend
+## 3.1. Predefined statement types
 
-Core is written in NodeJS. And application database in Sqlite3.
-Why Sqlite3?
-It is easier to develop so small project and is free. The most popular and free databases like MySQL and PostgreSql fit to this project as well, but in stage of developement it is easier to use file based database.
+Statement types determines how statement should be rendered, and its limitations.
 
-## 3.2. Frontend
+ - Type id: **1** - Short answer with 3 options: Yes, No and I dont know.
+   For this type we can reply with value 0 (for "no"), 1 (for "yes") or 2 (for "i don't know").
+ - Type id: **2** - Percentage answer from 0 to 100 only integer allowed.
 
-**Main dependencies**
-
-1. ReactJS
-2. Bootstrap4
-
-# 4. Survey providers
-
-## 4.1. CSV provider
+## 3.2. CSV provider
 
 **Schema**
 
@@ -134,7 +118,7 @@ This is description.
 3,2,This is actually question with range values from 0 to 100%.
 ```
 
-## 4.2. JSON provider
+## 3.3. JSON provider
 
 Json provider provide very readable schema, that looks as follow:
 
@@ -163,7 +147,7 @@ Json provider provide very readable schema, that looks as follow:
 }
 ```
 
-# 5. RestAPI documentation
+# 4. RestAPI documentation
 
 ## Get active survey
     GET /api/v1/survey
@@ -175,16 +159,18 @@ Json provider provide very readable schema, that looks as follow:
 
  + Response 200
  + Body
-    {
-        data: [
-            {
-                statementId: 1,
-                value: 1
-            },
-            ...
-        ]
-    }
 
+```
+{
+    data: [
+        {
+            statementId: 1,
+            value: 1
+        },
+        ...
+    ]
+}
+```
 
 ## Errors
 

@@ -5,11 +5,23 @@
 class BaseProvider
 {
     /**
+     * @param {String} fileSource
+     */
+    constructor(fileSource) {
+        this.fileSource = fileSource;
+    }
+
+    /**
      * Returns collection of survey nodes.
-     * @return {Survey}
+     *
+     * @return {Object}
      */
     getSurvey() {
-        throw new Error('Method getSurvey() is not implemented.');
+        if (null != this.survey) {
+            return this.survey;
+        }
+
+        return this.parse().survey;
     }
 }
 
