@@ -18,6 +18,8 @@
     <script src="modules/react/react-dom.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/babel/browser.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/fetch/fetch.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/babel" src="src/SurveyService.jsx"></script>
   </head>
 
   <body>
@@ -25,38 +27,7 @@
   </body>
 
   <script type="text/babel">
-    class SurveyService {
-      /**
-       * @return {Promise}
-       */
-      static getSurvey() {
-        return fetch('/api/v1/survey')
-          .then(checkStatus)
-          .then((data) => {
-            return data.json();
-          });
-      }
 
-      /**
-       * @param  {Object} replies
-       * @return {Promise}
-       */
-      static sendReplies(replies) {
-        return fetch('/api/v1/survey/reply',
-          {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({data: replies})
-          })
-          .then(checkStatus)
-          .then((data) => {
-            return data.json();
-          });
-      }
-    }
 
     class Question extends React.Component
     {
