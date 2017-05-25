@@ -36,9 +36,8 @@ class ReplyController extends Controller {
         });
 
         const replyResource = new ReplyResource(connection);
-
-        const s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
-        const userHash = Array(128).join().split(',').map(function() { return s.charAt(Math.floor(Math.random() * s.length)); }).join('');;
+        const uuid = require("uuid");
+        const userHash = uuid.v4();
 
         replyResource.insertReplies(survey.id, moment(new Date()), userHash, replies)
             .then((data) => {
