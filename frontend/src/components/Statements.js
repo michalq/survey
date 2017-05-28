@@ -1,6 +1,8 @@
 import {QuestionPercentage} from 'QuestionPercentage';
 import {QuestionQuick} from 'QuestionQuick';
 import {Pagination} from 'Pagination';
+import {FinishPage} from 'FinishPage'
+import {SurveyService} from '../services/SurveyService';
 
 /**
  *
@@ -62,14 +64,19 @@ export class Statements extends React.Component
 
     SurveyService.sendReplies(formData)
       .then((data) => {
-        console.log(data);
         ReactDOM.render(
           <FinishPage/>,
           document.getElementById('app')
         );
       }).catch((data) => {
         data.response.json().then((data) => {
-          console.log(data);
+          if (typeof data.error != 'undefined') {
+            console.log(data.error);
+            // Oh I know that's ugly, here could fit sweetalert2, but I don; like frontend anyway.
+            alert(data.error.message);
+            return;
+          }
+
           let i = 0;
           const errorsRemapped = [];
           for (let i = 0; i < data.errors.length; i++) {

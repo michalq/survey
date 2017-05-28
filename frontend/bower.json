@@ -1,14 +1,13 @@
 {
-  "name": "Survey System",
+  "name": "survey-system",
   "authors": [
     "Michał Kutrzeba <kutrzeba.michal@gmail.com>"
   ],
   "directory": "modules",
-  "description": "Survey system allows you",
+  "description": "Survey system.",
   "main": "index.html",
   "keywords": [
     "survey",
-    "prz",
     "system"
   ],
   "license": "MIT",

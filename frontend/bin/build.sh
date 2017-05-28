@@ -1,9 +1,9 @@
 #!/bin/sh
 
-basePath=`pwd + "/.."`
+cd `pwd`/..
 
-bower install ${basePath}/public
+bower install
 
 # Building frontend
-mkdir ${basePath}/dist
-../node_modules/babel-cli/bin/babel.js ${basePath}/public --out-dir ${basePath}/dist
+mkdir public/dist
+./node_modules/babel-cli/bin/babel.js src --out-dir public/dist --minified

@@ -1,5 +1,6 @@
 import {Landing} from 'Landing';
 import {Statements} from 'Statements';
+import {Navi} from 'Navi';
 
 /**
  *

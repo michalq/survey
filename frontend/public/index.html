@@ -16,29 +16,22 @@
 
     <script src="modules/react/react.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/react/react-dom.js" type="text/javascript" charset="utf-8"></script>
-    <script src="modules/babel/browser.js" type="text/javascript" charset="utf-8"></script>
     <script src="modules/fetch/fetch.js" type="text/javascript" charset="utf-8"></script>
-
-    <script type="text/babel" src="src/components/Question.js"></script>
+    <script src="modules/requirejs/require.js" type="text/javascript" charset="utf-8"></script>
   </head>
 
   <body>
     <div id="app"></div>
+    <script type="text/javascript">
+        require.config({
+            baseUrl: "dist/components",
+            paths: {
+                "modules": "modules/"
+            },
+            waitSeconds: 1
+          });
+
+        require(['index']);
+    </script>
   </body>
-
-  <script type="text/babel">
-    SurveyService.getSurvey()
-      .then((data) => {
-        if (typeof data.success == 'undefined' || !data.success) {
-          throw new Error('Error occured while fetching survey.');
-        }
-
-        ReactDOM.render(
-          <Body survey={data.data}/>,
-          document.getElementById('app')
-        );
-      }).catch((error) => {
-        console.log('Request failed', error)
-      });
-  </script>
 </html>

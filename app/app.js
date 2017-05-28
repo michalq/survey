@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 // Get routes
-const index = require('./routes/index');
 const apiv1 = require('./routes/apiv1');
 
 // Initialize an app
@@ -19,9 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../frontend/public')));
-
+console.log(path.join(__dirname, '../frontend/public'));
 // Set routes
-app.use('/', index);
 app.use('/api/v1', apiv1);
 
 // Catch 404 and forward to error handler.
