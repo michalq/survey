@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Survey System">
+    <meta name="author" content="Michał Kutrzeba">
+
+    <title>Survey System</title>
+    <link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="modules/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="modules/Ionicons/css/ionicons.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <script src="modules/react/react.js" type="text/javascript" charset="utf-8"></script>
+    <script src="modules/react/react-dom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="modules/babel/browser.js" type="text/javascript" charset="utf-8"></script>
+    <script src="modules/fetch/fetch.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/babel" src="src/components/Question.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+
+  <script type="text/babel">
+    SurveyService.getSurvey()
+      .then((data) => {
+        if (typeof data.success == 'undefined' || !data.success) {
+          throw new Error('Error occured while fetching survey.');
+        }
+
+        ReactDOM.render(
+          <Body survey={data.data}/>,
+          document.getElementById('app')
+        );
+      }).catch((error) => {
+        console.log('Request failed', error)
+      });
+  </script>
+</html>

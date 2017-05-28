@@ -1,6 +1,6 @@
 /app/node_modules
-/public/node_modules
+/frontend/node_modules
 /node_modules
-/public/modules
 npm-debug.log
 /dist
+/frontend/public/modules
