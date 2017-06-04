@@ -6,8 +6,8 @@ RUN npm install bower -g
 
 WORKDIR /src
 ADD app/ /src/app
-ADD public/ /src/public
+ADD frontend/ /src/frontend
 
 EXPOSE 3000
 
-RUN cd app && npm install && cd ../public bower install
+RUN cd app && npm install && cd ../public && bower install && npm install
