@@ -2,7 +2,8 @@
 Example survey.
 This is just an example survey. To provide new survey please read file readme.md.
 1,1,Statement with short answer?
-2,1,"Do you think you'l pass the exam?"
-3,2,What kind of alcohol do you often drink?
-4,1,What do you think about this survey?
-5,2,Percentage!
+2,1,This is another question with short answer.
+3,2,"Be aware, when using CSV provider you cannot use comma directly, you must put string between quotation marks, and new lines aren't allowed."
+4,1,'Single apostrophe is also allowed.'
+5,2,"This is another question with percentage, there is no way to pass different value than from 0 to 100, you can try using postman, but error should be thrown."
+6,1,Short question at the end.

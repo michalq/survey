@@ -8,7 +8,8 @@
 3.1. [Predefined survey types](#31-predefined-survey-types)
 3.2. [CSV provider](#32-csv-provider)
 3.3. [JSON provider](#33-json-provider)
-4. [RestAPI documentation](#4-restapi-documentation)
+4. [What is missing?](#4-what-is-missing)
+5. [RestAPI documentation](#5-restapi-documentation)
 
 # 1. Installation
 
@@ -31,8 +32,9 @@
 cd app
 npm install
 # Frontend dependencies
-cd public
+cd frontend
 bower install
+npm install
 ```
 
 # 2. Running
@@ -147,7 +149,19 @@ Json provider provide very readable schema, that looks as follow:
 }
 ```
 
-# 4. RestAPI documentation
+# 4. What is missing?
+
+There is one thing that can break application now and its very trivial.
+If you pass 1000 or even more requests with answers then the same amount of data will be saved in database,
+thus in your data will be garbage.
+
+## Solution
+
+1. Captcha - very userfriendly (using google captcha for example),
+2. E-mail verification, less user friendly but verificating email could be very efficient way to filter garbage data,
+3. Both options.
+
+# 5. RestAPI documentation
 
 ## Get active survey
     GET /api/v1/survey
