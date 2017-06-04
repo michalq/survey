@@ -9,5 +9,3 @@ ADD app/ /src/app
 ADD frontend/ /src/frontend
 
 EXPOSE 3000
-
-RUN cd app && npm install && cd ../frontend && bower install && npm install
