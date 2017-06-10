@@ -7,7 +7,7 @@ export class QuestionQuick extends Question
 {
   render() {
     const title = this.props.title;
-    const statementNo = this.props.no;
+    const statementNo = this.id;
 
     return (
       <div className="card question-card hidden">

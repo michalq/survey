@@ -75,20 +75,33 @@ class ReplyController extends Controller {
             }
 
             reply.value = parseInt(reply.value);
-            if (isNaN(reply.value)) {
+            reply.value = isNaN(reply.value) ? null : reply.value;
+            if (statement.validateValue && !reply.value) {
                 errors.push({
                     statementId: statement.id,
-                    message: "Value is not a number.",
+                    message: "No answer",
                     code: "NAN_ANSWER"
                 });
                 continue;
             }
 
-            if (reply.value < statement.minValue || reply.value > statement.maxValue) {
+            if (statement.validateValue
+                && (reply.value < statement.minValue || reply.value > statement.maxValue)
+            ) {
                 errors.push({
                     statementId: reply.statementId,
                     message: "Value is incorrect. Should be between " + statement.minValue + " and " + statement.maxValue,
                     code: "WRONG_VALUE"
+                });
+                continue;
+            }
+
+            reply.valueText = (reply.valueText) ? reply.valueText : null;
+            if (statement.validateTextField && (typeof reply.valueText == 'undefined' || !reply.valueText.length)) {
+                errors.push({
+                    statementId: reply.statementId,
+                    message: "Response is too short.",
+                    code: "WRONG_TEXT_VALUE"
                 });
                 continue;
             }

@@ -5,11 +5,13 @@ class StatementType
      * Allowed statement types.
      * @return {Array}
      */
-    get allowedTypes() {
+    static get allowedTypes() {
         return [
+            StatementType.Custom,
             StatementType.Short,
             StatementType.Percentage,
-            StatementType.Custom
+            StatementType.Strength,
+            StatementType.Text
         ];
     }
 
@@ -28,10 +30,24 @@ class StatementType
     }
 
     /**
+     * Statement with 6 options from 0 to 5.
+     */
+    static get Strength() {
+        return 3;
+    }
+
+    /**
+     * Statement with just text field.
+     */
+    static get Text() {
+        return 4;
+    }
+
+    /**
      * Custom type.
      */
     static get Custom() {
-        return 3;
+        return 0;
     }
 }
 

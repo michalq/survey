@@ -7,3 +7,5 @@ This is just an example survey. To provide new survey please read file readme.md
 4,1,'Single apostrophe is also allowed.'
 5,2,"This is another question with percentage, there is no way to pass different value than from 0 to 100, you can try using postman, but error should be thrown."
 6,1,Short question at the end.
+7,3,"Ok, here you can pick strengths from 0 to 5."
+8,4,Here you can write a poem.

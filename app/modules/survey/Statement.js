@@ -2,6 +2,8 @@ const StatementType = require('./StatementType');
 
 /**
  * Class represents single question or statement with options.
+ *
+ * @TODO This class should be splitted among different statement types without 'if' conditions everywhere.
  */
 class Statement
 {
@@ -40,9 +42,31 @@ class Statement
          */
         this.type = type;
 
-        if (StatementType.Short == type) {
-            this.minValue = 0;
-            this.maxValue = 2;
+        switch (this.type) {
+            case StatementType.Short:
+                this.validateValue = true;
+                this.validateTextField = false;
+                this.minValue = 0;
+                this.maxValue = 2;
+                break;
+            case StatementType.Strength:
+                this.validateValue = true;
+                this.validateTextField = false;
+                this.minValue = 0;
+                this.maxValue = 5;
+                break;
+            case StatementType.Text:
+                this.validateValue = false;
+                this.validateTextField = true;
+                this.minValue = 0;
+                this.maxValue = 0;
+                break;
+            default:
+                this.validateValue = true;
+                this.validateTextField = false;
+                this.minValue = 0;
+                this.maxValue = 100;
+                break;
         }
 
         if (type == StatementType.Custom && responses.length > 0) {
@@ -58,9 +82,8 @@ class Statement
      * @param  {Numeric} type
      */
     set type(type) {
-        console.log('test');
-        if (this.allowedTypes.indexOf(type) == -1) {
-            throw new Error('Type ' + type + 'is not allowed.');
+        if (StatementType.allowedTypes.indexOf(type) == -1) {
+            throw new Error('Type no:' + type + ' is not allowed.');
         }
 
         this._type = type;
@@ -77,46 +100,98 @@ class Statement
      * @return {String}
      */
     get responses() {
-        if (this.type == StatementType.Short) {
-            return {
-                "type": StatementType.Short,
-                "data": [
-                    {
-                        "label": "Yes",
-                        "value": 1
+        switch (this.type) {
+            case StatementType.Short:
+                return {
+                    type: StatementType.Short,
+                    options: {
+                        textField: false
                     },
-                    {
-                        "label": "No",
-                        "value": 0
+                    data: [
+                        {
+                            label: "Yes",
+                            value: 1
+                        },
+                        {
+                            label: "No",
+                            value: 0
+                        },
+                        {
+                            label: "I don't know",
+                            value: 2
+                        }
+                    ]
+                };
+
+            case StatementType.Percentage:
+                return {
+                    type: StatementType.Percentage,
+                    options: {
+                        textField: false
                     },
-                    {
-                        "label": "I don't know",
-                        "value": 2
+                    data: {
+                        start: 0,
+                        end: 100
                     }
-                ]
-            };
-        }
+                };
 
-        if (this.type == StatementType.Percentage) {
-            return {
-                "type": StatementType.Percentage,
-                "data": {
-                    "start": 0,
-                    "end": 100
-                }
-            };
-        }
+            case StatementType.Strength:
+                return {
+                    type: StatementType.Strength,
+                    options: {
+                        textField: false
+                    },
+                    data: [
+                        {
+                            label: "0",
+                            value: 0
+                        },
+                        {
+                            label: "1",
+                            value: 1
+                        },
+                        {
+                            label: "2",
+                            value: 2
+                        },
+                        {
+                            label: "3",
+                            value: 3
+                        },
+                        {
+                            label: "4",
+                            value: 4
+                        },
+                        {
+                            label: "5",
+                            value: 5
+                        }
+                    ]
+                };
 
-        if (this.type == StatementType.Custom) {
-            return {
-                "type": StatementType.Custom,
-                "data": this.responses
-            };
-        }
+            case StatementType.Text:
+                return {
+                    type: StatementType.Text,
+                    options: {
+                        textField: true
+                    },
+                    data: {}
+                };
 
-        return {
-            type: null
-        };
+            case StatementType.Custom:
+                return {
+                    type: StatementType.Custom,
+                    options: {
+                        textField: false
+                    },
+                    data: this.responses
+                };
+
+            default:
+                return {
+                    type: null
+                };
+        }
     }
 
     /**
@@ -159,22 +234,6 @@ class Statement
             title: this.title,
             response: this.responses
         };
-    }
-
-    /**
-     * Returns type.
-     * @return {Number}
-     */
-    get type() {
-        return this.responseType;
-    }
-
-    /**
-     * Set type of response.
-     * @param {Number}
-     */
-    set type(type) {
-        this.responseType = type;
     }
 }
 

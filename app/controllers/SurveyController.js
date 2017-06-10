@@ -16,7 +16,6 @@ class SurveyController extends Controller
     getSurveyAction() {
         try {
             const survey = this.surveyService.getSurvey();
-            console.log(survey);
 
             this.res.statusCode = 200;
             this.res.json({

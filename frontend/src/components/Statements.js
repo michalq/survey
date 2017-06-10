@@ -1,5 +1,7 @@
 import {QuestionPercentage} from 'QuestionPercentage';
 import {QuestionQuick} from 'QuestionQuick';
+import {QuestionStrength} from 'QuestionStrength';
+import {QuestionTextField} from 'QuestionTextField';
 import {Pagination} from 'Pagination';
 import {FinishPage} from 'FinishPage'
 import {SurveyService} from '../services/SurveyService';
@@ -58,7 +60,8 @@ export class Statements extends React.Component
     for (let i = 0; i < this.statements.length; i++) {
       formData[i] = {
         statementId: this.statements[i].id,
-        value: this.statements[i].state.value
+        value: this.statements[i].state.value,
+        valueText: this.statements[i].state.valueText || ''
       };
     }
 
@@ -72,7 +75,7 @@ export class Statements extends React.Component
         data.response.json().then((data) => {
           if (typeof data.error != 'undefined') {
             console.log(data.error);
-            // Oh I know that's ugly, here could fit sweetalert2, but I don; like frontend anyway.
+            // I know that's ugly, but I dont like frontend anyway.
             alert(data.error.message);
             return;
           }
@@ -93,6 +96,7 @@ export class Statements extends React.Component
 
             stat.setState({
               value: stat.state.value,
+              valueText: ('undefined' != stat.state.valueText) ? stat.state.valueText : '',
               error: errorMsg
             });
           }
@@ -108,24 +112,47 @@ export class Statements extends React.Component
     let domStatements = [];
     for (let i = 0; i < statements.length; i++) {
       const statement = statements[i];
-      if (1 == statement.response.type) {
-        domStatements.push(
-          <QuestionQuick
-            id={statement.id}
-            key={i}
-            ref={(statement) => { this.statements.push(statement); }}
-            title={statement.title}
-            responses={statement.response} />
-        );
-      } else if (2 == statement.response.type) {
-        domStatements.push(
-          <QuestionPercentage
-            id={statement.id}
-            key={i}
-            ref={(statement) => { this.statements.push(statement); }}
-            title={statement.title}
-            responses={statement.response} />
-        );
+      switch(statement.response.type) {
+        case 1:
+          domStatements.push(
+            <QuestionQuick
+              id={statement.id}
+              key={i}
+              ref={(statement) => { this.statements.push(statement); }}
+              title={statement.title}
+              responses={statement.response} />
+          );
+          break;
+        case 2:
+          domStatements.push(
+            <QuestionPercentage
+              id={statement.id}
+              key={i}
+              ref={(statement) => { this.statements.push(statement); }}
+              title={statement.title}
+              responses={statement.response} />
+          );
+          break;
+        case 3:
+          domStatements.push(
+            <QuestionStrength
+              id={statement.id}
+              key={i}
+              ref={(statement) => { this.statements.push(statement); }}
+              title={statement.title}
+              responses={statement.response} />
+          );
+          break;
+        case 4:
+          domStatements.push(
+            <QuestionTextField
+              id={statement.id}
+              key={i}
+              ref={(statement) => { this.statements.push(statement); }}
+              title={statement.title}
+              responses={statement.response} />
+          );
+          break;
       }
     }
 

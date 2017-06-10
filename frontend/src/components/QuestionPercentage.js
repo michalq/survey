@@ -29,7 +29,7 @@ export class QuestionPercentage extends Question
             className="form-control"
             id={'statement-' + statementNo + '-input-0'}
             type="range"
-            name="response[]"
+            name={'response[' + statementNo + ']'}
             min="0"
             max="100"
             step="1"
@@ -37,7 +37,7 @@ export class QuestionPercentage extends Question
             onChange={this.handleChange} />
         </div>
         <div className="card-block">
-          <div className="card-tect">
+          <div className="card-text">
             <p className="h3 text-center" id={'statement-' + statementNo + '-input-0-output'}>0%</p>
           </div>
         </div>
