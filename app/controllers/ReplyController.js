@@ -75,8 +75,7 @@ class ReplyController extends Controller {
             }
 
             reply.value = parseInt(reply.value);
-            reply.value = isNaN(reply.value) ? null : reply.value;
-            if (statement.validateValue && !reply.value) {
+            if (statement.validateValue && isNaN(reply.value)) {
                 errors.push({
                     statementId: statement.id,
                     message: "No answer",
@@ -84,6 +83,8 @@ class ReplyController extends Controller {
                 });
                 continue;
             }
+
+            reply.value = isNaN(reply.value) ? null : reply.value;
 
             if (statement.validateValue
                 && (reply.value < statement.minValue || reply.value > statement.maxValue)

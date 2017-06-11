@@ -96,9 +96,11 @@ make up
 
 Statement types determines how statement should be rendered, and its limitations.
 
- - Type id: **1** - Short answer with 3 options: Yes, No and I dont know.
+ - Type id: **1** - short answer with 3 options: Yes, No and I dont know.
    For this type we can reply with value 0 (for "no"), 1 (for "yes") or 2 (for "i don't know").
- - Type id: **2** - Percentage answer from 0 to 100 only integer allowed.
+ - Type id: **2** - percentage answer from 0 to 100 only integer allowed.
+ - Type id: **3** - strength - you can choose strength from 0 to 5.
+ - Type id: **4** - text field - without options just text field.
 
 ## 3.2. CSV provider
 
