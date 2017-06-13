@@ -10,23 +10,114 @@
         },
         {
             "id": 2,
-            "statement": "Do you think you'l pass the exam?",
-            "type": 1
-        },
-        {
-            "id": 3,
-            "statement": "What kind of alcohol do you often drink?",
+            "statement": "Another basic type with percentage.",
             "type": 2
         },
         {
             "id": 4,
-            "statement": "What do you think about this survey?",
-            "type": 1
+            "statement": "Here you can rate this survey.",
+            "type": 3
         },
         {
             "id": 5,
-            "statement": "Percentage!",
-            "type": 2
+            "statement": "Open question.",
+            "type": 4
+        },
+        {
+            "id": 6,
+            "statement": "Who wants to be a millionaire?",
+            "type": 5,
+            "options": {
+                "multiSelect": false,
+                "textField": false
+            },
+            "statements": [
+                {
+                    "label": "Me",
+                    "value": 1
+                },
+                {
+                    "label": "You",
+                    "value": 2
+                },
+                {
+                    "label": "Both of us",
+                    "value": 3
+                },
+                {
+                    "label": "No one",
+                    "value": 4
+                }
+            ]
+        }
+        {
+            "id": 7,
+            "statement": "Multiselect?",
+            "type": 5,
+            "options": {
+                "multiSelect": true,
+                "textField": false
+            },
+            "statements": [
+                {
+                    "label": "You can choose more",
+                    "value": 1
+                },
+                {
+                    "label": "and more",
+                    "value": 2
+                },
+                {
+                    "label": "and this also",
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "statement": "Multiselect is not enough? You can write a comment.",
+            "type": 5,
+            "options": {
+                "multiSelect": true,
+                "textField": true
+            },
+            "statements": [
+                {
+                    "label": "You can choose more",
+                    "value": 1
+                },
+                {
+                    "label": "and more",
+                    "value": 2
+                },
+                {
+                    "label": "and this also",
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "statement": "With radio this works as well.",
+            "type": 5,
+            "options": {
+                "multiSelect": false,
+                "textField": true
+            },
+            "statements": [
+                {
+                    "label": "You can choose only this.",
+                    "value": 1
+                },
+                {
+                    "label": "or this",
+                    "value": 2
+                },
+                {
+                    "label": "or third option",
+                    "value": 3
+                }
+            ]
         }
     ]
 }
